@@ -7,29 +7,36 @@
             test_user
         </sql>
         <sql id="testColumn">
-            user_Id,user_name,password,phone
+            user_Id,user_Name,password,phone
         </sql>
 
-    <!--2. Sql statements-->
+    <!--2.configure resultMap-->
+    <resultMap id="testResultMap" type="com.nmefc.hpcmmp.entity.Test">
+        <id property="userId" column="user_Id"></id>
+        <result property="userName" column="user_Name"></result>
+        <result property="password" column="password"></result>
+        <result property="phone" column="phone"></result>
+    </resultMap>
+    <!--3. Sql statements-->
     <insert id="insert" parameterType="com.nmefc.hpcmmp.entity.Test">
         INSERT INTO
         <include refid="testTable"></include>
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            user_name,password,
+            user_Name,password,
             <if test="phone != null">
                 phone,
             </if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            #{userName jdbcType=VARCHAR},#{password jdbcType=VARCHAR},
+            #{userName},#{password},
             <if test="phone != null">
-                #{phone jdbcType=VARCHAR},
+                #{phone},
             </if>
         </trim>
     </insert>
 
-    <select id="selectAll" resultType="com.nmefc.hpcmmp.entity.Test">
+    <select id="selectAll" resultMap="testResultMap">
         SELECT
         <include refid="testColumn"></include>
         FROM

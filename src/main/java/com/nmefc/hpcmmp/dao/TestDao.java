@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @Author: QuYuan
- * @Description: test dao
+ * @Description: test dao interface
  * @Date: Created in 17:45 2019/1/30
  * @Modified By:
  */
@@ -22,15 +22,11 @@ public interface TestDao {
      *
      */
     List<Test> selectAll();
-    /**
-     *
-     * @Description: insert one test into table
-     *
-     * @auther: QuYuan
-     * @date: 8:47 2019/1/31
-     * @param: [test]
-     * @return: void
-     *
-     */
-    void insert(Test test);
+/**
+ * @author: QuYuan
+ * @date: 11:40 2019/1/31 
+ * @param: [test]
+ * @return: int
+ */
+    int insert(Test test);
 }
