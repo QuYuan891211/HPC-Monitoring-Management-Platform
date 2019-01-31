@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+    <mapper namespace="com.nmefc.hpcmmp.dao.TestDao">
+
+    <!--1. Reusable chunk of SQL that can be referenced by other statements-->
+        <sql id="testTable">
+            test_user
+        </sql>
+        <sql id="testColumn">
+            user_Id,user_name,password,phone
+        </sql>
+
+    <!--2. Sql statements-->
+    <insert id="insert" parameterType="com.nmefc.hpcmmp.entity.Test">
+        INSERT INTO
+        <include refid="testTable"></include>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            user_name,password,
+            <if test="phone != null">
+                phone,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{userName jdbcType=VARCHAR},#{password jdbcType=VARCHAR},
+            <if test="phone != null">
+                #{phone jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectAll" resultType="com.nmefc.hpcmmp.entity.Test">
+        SELECT
+        <include refid="testColumn"></include>
+        FROM
+        <include refid="testTable"></include>
+    </select>
+    </mapper>
