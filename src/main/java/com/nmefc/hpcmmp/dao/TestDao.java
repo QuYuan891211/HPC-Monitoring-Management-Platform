@@ -10,6 +10,6 @@ import java.util.List;
  * @Date: Created in 17:45 2019/1/30
  * @Modified By:
  */
-public interface TestDao<Test> extends BaseDao<Test> {
+public interface TestDao extends BaseDao<Test> {
 
 }

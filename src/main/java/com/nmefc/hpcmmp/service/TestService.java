@@ -13,29 +13,7 @@ import java.util.List;
  * @Modified By:
  */
 
-public interface TestService {
-   /**
-    *
-    * @Description: 
-    * 
-    * @auther: QuYuan
-    * @date: 10:44 2019/1/31
-    * @param: [pageNum, pageSize]
-    * @return: com.github.pagehelper.PageInfo<com.nmefc.hpcmmp.entity.Test>
-    *
-    */
-    PageInfo<Test> selectAll(int pageNum,int pageSize);
+public interface TestService extends BaseService<Test> {
 
-    /**
-     *
-     * @Description: insert one test into table
-     *
-     * @auther: QuYuan
-     * @date: 10:43 2019/1/31
-     * @param: [test]
-     * @return: int
-     *
-     */
-    int insert(Test test);
     
 }

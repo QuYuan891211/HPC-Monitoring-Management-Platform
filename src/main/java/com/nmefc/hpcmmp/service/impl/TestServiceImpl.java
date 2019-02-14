@@ -39,17 +39,51 @@ public class TestServiceImpl implements TestService{
     }
 
     /**
-     *
-     * @Description: insert one test into the table
-     *
-     * @auther: QuYuan
-     * @date: 10:59 2019/1/31
+     * @description:
+     * @author: QuYuan
+     * @date: 17:23 2019/2/14 
      * @param: [test]
      * @return: int
-     *
      */
     @Override
     public int insert(Test test) {
         return testDao.insert(test);
     }
+    /**
+     * @description:
+     * @author: QuYuan
+     * @date: 17:23 2019/2/14 
+     * @param: [entity]
+     * @return: int
+     */
+    @Override
+    public int deleteByPk(Test entity) {
+        return 0;
+    }
+    
+    /**
+     * @description:
+     * @author: QuYuan
+     * @date: 17:23 2019/2/14 
+     * @param: []
+     * @return: int
+     */
+    @Override
+    public int deleteAll() {
+        return 0;
+    }
+    /**
+     * @description:
+     * @author: QuYuan
+     * @date: 17:23 2019/2/14 
+     * @param: [entity]
+     * @return: int
+     */
+    @Override
+    public int updateByPk(Test entity) {
+        return 0;
+    }
+    
+    
+
 }
