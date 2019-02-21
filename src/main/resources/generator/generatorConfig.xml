@@ -109,7 +109,8 @@
 
        注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
     -->
-        <table tableName="management_action" domainObjectName="Action" >
+        <table tableName="management_action" domainObjectName="Action" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
 
             <!-- 参考 javaModelGenerator 的 constructorBased属性-->
             <property name="constructorBased" value="false"/>
@@ -186,9 +187,9 @@
                column:要重新设置的列名；
                注意，一个table元素中可以有多个columnOverride元素哈~
              -->
-            <columnOverride column="username">
+            <!--<columnOverride column="username">-->
                 <!-- 使用property属性来指定列要生成的属性名称 -->
-                <property name="property" value="userName"/>
+                <!--<property name="property" value="userName"/>-->
 
                 <!-- javaType用于指定生成的domain的属性类型，使用类型的全限定名
                 <property name="javaType" value=""/>
@@ -207,7 +208,7 @@
                 <!-- 参考table元素的delimitAllColumns配置，默认为false
                 <property name="delimitedColumnName" value=""/>
                  -->
-            </columnOverride>
+            <!--</columnOverride>-->
 
             <!-- ignoreColumn设置一个MGB忽略的列，如果设置了改列，那么在生成的domain中，生成的SQL中，都不会有该列出现
                column:指定要忽略的列的名字；
@@ -216,6 +217,46 @@
                注意，一个table元素中可以有多个ignoreColumn元素
             <ignoreColumn column="deptId" delimitedColumnName=""/>
             -->
+
+
+
         </table>
+
+        <!--逆向生成角色-->
+        <table tableName="management_role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+
+            <property name="constructorBased" value="false"/>
+
+            <property name="ignoreQualifiersAtRuntime" value="false"/>
+
+            <property name="immutable" value="false"/>
+
+            <property name="modelOnly" value="false"/>
+
+            <property name="selectAllOrderByClause" value="age desc,username asc"/>
+
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+        <!--逆向生成用户-->
+        <table tableName="management_user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+
+            <property name="constructorBased" value="false"/>
+
+            <property name="ignoreQualifiersAtRuntime" value="false"/>
+
+            <property name="immutable" value="false"/>
+
+            <property name="modelOnly" value="false"/>
+
+            <property name="selectAllOrderByClause" value="age desc,username asc"/>
+
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+
+
     </context>
 </generatorConfiguration>
