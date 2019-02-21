@@ -2,7 +2,7 @@ package com.nmefc.hpcmmp.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nmefc.hpcmmp.dao.TestDao;
+import com.nmefc.hpcmmp.dao.TestMapper;
 import com.nmefc.hpcmmp.entity.Test;
 import com.nmefc.hpcmmp.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service(value = "testService")
 public class TestServiceImpl implements TestService{
     @Autowired
-    private TestDao testDao;
+    private TestMapper testDao;
     /**
      *
      * @Description: pagination

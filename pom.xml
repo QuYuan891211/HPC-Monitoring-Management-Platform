@@ -52,7 +52,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!--4.5 Import commons-lang3-->
+		<!--4.5 引入Java commons-lang3工具库-->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -65,7 +65,7 @@
 			<version>1.1.9</version>
 		</dependency>
 
-		<!--4.7 Import Jackson-->
+		<!--4.7 引入 Jackson工具库-->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -83,14 +83,18 @@
 			<artifactId>jackson-module-parameter-names</artifactId>
 		</dependency>
 
-		<!--4.8 Import PaginationHelper-->
+		<!--4.8 引入分页插件-->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>1.2.5</version>
 		</dependency>
-
-
+		<!--4.9 mybatis逆向工程插件-->
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+			<version>1.3.2</version>
+		</dependency>
 	</dependencies>
 
 
@@ -100,7 +104,19 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.7</version>
+				<configuration>
+					<configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
+					<overwrite>true</overwrite>
+					<verbose>true</verbose>
+				</configuration>
+			</plugin>
 		</plugins>
+
 	</build>
 
 </project>

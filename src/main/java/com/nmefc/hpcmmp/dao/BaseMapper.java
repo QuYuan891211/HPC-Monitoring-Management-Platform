@@ -8,7 +8,7 @@ import java.util.List;
  * @Date: Created in 16:27 2019/2/14
  * @Modified By:
  */
-public interface BaseDao<T> {
+public interface BaseMapper<T> {
 /**
  * @description: insert entity into table
  * @author: QuYuan
