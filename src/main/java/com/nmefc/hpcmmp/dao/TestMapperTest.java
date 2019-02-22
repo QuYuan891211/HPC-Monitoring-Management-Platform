@@ -8,6 +8,6 @@ import com.nmefc.hpcmmp.entity.Test;
  * @Date: Created in 17:45 2019/1/30
  * @Modified By:
  */
-public interface TestMapper extends BaseMapper<Test> {
+public interface TestMapperTest extends TestBaseMapper<Test> {
 
 }

@@ -8,7 +8,7 @@ import com.github.pagehelper.PageInfo;
  * @Date: Created in 16:58 2019/2/14
  * @Modified By:
  */
-public interface BaseService<T> {
+public interface TestBaseService<T> {
     /**
      * @description: find all entity from table
      * @author: QuYuan

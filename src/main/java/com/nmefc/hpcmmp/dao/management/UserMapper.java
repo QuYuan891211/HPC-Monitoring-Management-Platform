@@ -1,17 +1,8 @@
 package com.nmefc.hpcmmp.dao.management;
 
+import com.nmefc.hpcmmp.dao.BaseMapper;
 import com.nmefc.hpcmmp.entity.management.User;
 
-public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
+public interface UserMapper extends BaseMapper<User> {
 
-    int insert(User record);
-
-    int insertSelective(User record);
-
-    User selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
 }

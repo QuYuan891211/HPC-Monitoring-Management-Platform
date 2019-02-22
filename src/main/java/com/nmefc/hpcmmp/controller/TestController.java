@@ -1,7 +1,7 @@
 package com.nmefc.hpcmmp.controller;
 
 import com.nmefc.hpcmmp.entity.Test;
-import com.nmefc.hpcmmp.service.TestService;
+import com.nmefc.hpcmmp.service.TestServiceTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
 
     @Autowired
-    private TestService testService;
+    private TestServiceTest testService;
 
     /**
      *

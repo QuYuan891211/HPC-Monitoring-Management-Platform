@@ -1,10 +1,6 @@
 package com.nmefc.hpcmmp.service;
 
-import com.github.pagehelper.PageInfo;
 import com.nmefc.hpcmmp.entity.Test;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @Author: QuYuan
@@ -13,7 +9,7 @@ import java.util.List;
  * @Modified By:
  */
 
-public interface TestService extends BaseService<Test> {
+public interface TestServiceTest extends TestBaseService<Test> {
 
     
 }
