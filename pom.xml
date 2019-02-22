@@ -109,12 +109,23 @@
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-maven-plugin</artifactId>
 				<version>1.3.7</version>
+				<!--自定义的插件-->
+				<dependencies>
+					<dependency>
+						<groupId>com.qy.custom.plugin</groupId>
+						<artifactId>MybatisPlugin</artifactId>
+						<version>1.0-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
 				<configuration>
 					<configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
 					<overwrite>true</overwrite>
 					<verbose>true</verbose>
 				</configuration>
 			</plugin>
+
+
+
 		</plugins>
 
 	</build>
