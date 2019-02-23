@@ -1,5 +1,6 @@
 package com.nmefc.hpcmmp.controller.management;
 
+import com.nmefc.hpcmmp.entity.management.User;
 import com.nmefc.hpcmmp.service.management.UserService;
 import com.nmefc.hpcmmp.utils.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;

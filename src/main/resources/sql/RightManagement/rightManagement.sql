@@ -38,7 +38,7 @@ create table management_action
    icon_class_name      varchar(32),
    is_show              bool not null default true,
    method_type_enum     int not null,
-   id                   int not null,
+   id                   int not null AUTO_INCREMENT,
    primary key (id)
 );
 
@@ -52,7 +52,7 @@ create table management_role
    sort                 int not null default 999,
    gmt_create           datetime not null,
    gmt_modified         datetime not null,
-   id                   int not null,
+   id                   int not null AUTO_INCREMENT,
    primary key (id)
 );
 
@@ -69,7 +69,7 @@ create table management_user
    gmt_create           datetime not null,
    gmt_modified         datetime not null,
    name                 varchar(20) not null,
-   id                   int not null,
+   id                   int not null AUTO_INCREMENT,
    primary key (id)
 );
 

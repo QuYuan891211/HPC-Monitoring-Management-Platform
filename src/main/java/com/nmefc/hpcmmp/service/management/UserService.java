@@ -1,5 +1,7 @@
 package com.nmefc.hpcmmp.service.management;
 
+import com.nmefc.hpcmmp.entity.management.User;
+import com.nmefc.hpcmmp.entity.management.UserExample;
 import com.nmefc.hpcmmp.service.BaseService;
 
 /**
@@ -8,5 +10,5 @@ import com.nmefc.hpcmmp.service.BaseService;
  * @Date: Created in 9:53 2019/2/22
  * @Modified By:
  */
-public interface UserService extends BaseService<User>{
+public interface UserService extends BaseService<User,UserExample,Integer>{
 }

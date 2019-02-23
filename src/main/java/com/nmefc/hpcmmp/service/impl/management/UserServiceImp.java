@@ -1,9 +1,15 @@
 package com.nmefc.hpcmmp.service.impl.management;
 
+import com.nmefc.hpcmmp.dao.management.UserMapper;
+import com.nmefc.hpcmmp.entity.management.User;
+import com.nmefc.hpcmmp.entity.management.UserExample;
+import com.nmefc.hpcmmp.service.BaseService;
 import com.nmefc.hpcmmp.service.impl.BaseServiceImp;
 import com.nmefc.hpcmmp.service.management.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author: QuYuan
@@ -12,7 +18,8 @@ import org.springframework.stereotype.Service;
  * @Modified By:
  */
 @Service("userService")
-public class UserServiceImp extends BaseServiceImp<User> implements UserService {
-    @Autowired
-    private UserMapper userMapper;
+public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> implements UserService {
+//    @Autowired
+//    private UserMapper userMapper;
+
 }

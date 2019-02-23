@@ -14,7 +14,7 @@ import java.util.List;
  * @Date: Created in 9:23 2019/2/22
  * @Modified By:
  */
-public interface BaseMapper<T,E,PK extends Serializable> {
+public interface BaseMapper<T,E,PK> {
     int deleteByPrimaryKey(PK pk);
 
     int insert(T record);

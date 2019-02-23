@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @Author: QuYuan
- * @Description: 让MyBatis Generator产生的Mapper更简洁,自行建立BaseMapper并让所有mapper继承
+ * @Description: 让MyBatis Generator产生的Mapper更简洁,自行建立BaseMapper并让所有mapper继承,此类被打包成了Jar, 引入到pom中Mybatis-Generator的依赖中使用
  * @Date: Created in 13:53 2019/2/22
  * @Modified By:
  */
