@@ -25,7 +25,7 @@ create table management_action
    gmt_create           datetime not null,
    gmt_modified         datetime not null,
    parent_id            int not null default 0,
-   url                  varchar(256) not null,
+   url                  varchar(255) not null UNIQUE,
    area_name            varchar(32),
    method_name          varchar(32),
    controller_name      varchar(32),
@@ -61,7 +61,7 @@ create table management_role
 /*==============================================================*/
 create table management_user
 (
-   account              varchar(20) not null,
+   account              varchar(20) not null UNIQUE ,
    password             varchar(20) not null,
    is_delete            bool not null,
    sort                 int not null default 999,

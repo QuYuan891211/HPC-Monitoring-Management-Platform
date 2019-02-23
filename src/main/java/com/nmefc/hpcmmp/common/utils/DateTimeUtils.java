@@ -1,4 +1,4 @@
-package com.nmefc.hpcmmp.utils;
+package com.nmefc.hpcmmp.common.utils;
 
 import java.sql.Timestamp;
 import java.util.Date;
