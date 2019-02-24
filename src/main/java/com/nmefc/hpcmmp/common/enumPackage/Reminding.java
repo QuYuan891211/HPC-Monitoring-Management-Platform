@@ -8,7 +8,8 @@ package com.nmefc.hpcmmp.common.enumPackage;
  */
 public enum Reminding {
     PARAMETERS_MISSING("缺少参数"),
-    PAREMETERE_ERROR("参数输入违规");
+    PAREMETERE_ERROR("参数输入违规"),
+    PAREMETERE_DUPLICATION("参数重复");
     private String value;
     public String getValue(){
         return value;

@@ -129,7 +129,7 @@ public class UserController {
         if(user == null || user.getName() ==null || user.getName().length() == 0 || user.getPassword()==null ||user.getPassword().length() == 0 || user.getAccount() == null || user.getAccount().length() == 0) {
             return Reminding.PARAMETERS_MISSING.getValue();
         }
-//        2.检测所填各项是否合规(Account不可重复，已经在数据库中设置)，并补齐默认值
+//        2.检测所填各项是否合规，并补齐默认值
 //        检查是否超出长度及违规字符
         List<String> temp1 = new LinkedList<String>();
         temp1.add(user.getAccount());
@@ -138,7 +138,11 @@ public class UserController {
         List<String> temp2 = new LinkedList<String >();
         temp2.add(user.getName());
 
+        //姓名是否违规
         if(!Regex.NAME.getDetectResult(temp2)){return Reminding.PAREMETERE_ERROR.getValue(); }
+        //账号是否重复
+        List<User> list = userService.accountDetected(user);
+        if(list !=null&& list.size() > 0){return Reminding.PAREMETERE_DUPLICATION.getValue();}
         return response;
     }
 

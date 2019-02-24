@@ -19,7 +19,16 @@ import java.util.List;
  */
 @Service("userService")
 public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> implements UserService {
-//    @Autowired
-//    private UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
 
+
+    @Override
+    public List<User> accountDetected(User user) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andAccountEqualTo(user.getAccount());
+        List<User> list = userMapper.selectByExample(example);
+        return list;
+    }
 }
