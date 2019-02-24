@@ -3,12 +3,14 @@ package com.nmefc.hpcmmp.service.impl.management;
 import com.nmefc.hpcmmp.dao.management.UserMapper;
 import com.nmefc.hpcmmp.entity.management.User;
 import com.nmefc.hpcmmp.entity.management.UserExample;
+import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.BaseService;
 import com.nmefc.hpcmmp.service.impl.BaseServiceImp;
 import com.nmefc.hpcmmp.service.management.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,11 +26,17 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
 
 
     @Override
-    public List<User> accountDetected(User user) {
+    public List<User> accountDetected(User user) throws ServiceException {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andAccountEqualTo(user.getAccount());
-        List<User> list = userMapper.selectByExample(example);
+        List<User> list = new ArrayList<User>();
+        try{
+           list  = userMapper.selectByExample(example);
+        }catch (Exception e){
+            throw new ServiceException("Account Detection  Exception in Service: " + e.getMessage() );
+        }
+
         return list;
     }
 }

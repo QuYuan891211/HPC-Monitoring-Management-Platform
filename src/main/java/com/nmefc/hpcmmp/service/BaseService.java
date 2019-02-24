@@ -1,5 +1,6 @@
 package com.nmefc.hpcmmp.service;
 
+import com.nmefc.hpcmmp.exception.ServiceException;
 import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
@@ -16,11 +17,11 @@ public interface BaseService<T,E,PK extends Serializable> {
 
     int insert(T record);
 
-    int insertSelective(T record);
+    int insertSelective(T record) throws ServiceException;
 
     T selectByPrimaryKey(PK pk);
 
-    int updateByPrimaryKeySelective(T record);
+    int updateByPrimaryKeySelective(T record) throws ServiceException;
 
     int updateByPrimaryKey(T record);
 

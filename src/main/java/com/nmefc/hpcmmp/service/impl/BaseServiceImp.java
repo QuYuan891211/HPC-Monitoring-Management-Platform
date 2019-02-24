@@ -1,6 +1,7 @@
 package com.nmefc.hpcmmp.service.impl;
 
 import com.nmefc.hpcmmp.dao.BaseMapper;
+import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,15 @@ public abstract class BaseServiceImp<T,E,PK extends Serializable> implements Bas
     }
 
     @Override
-    public int insertSelective(T record) {
-        return baseMapper.insertSelective(record);
+    public int insertSelective(T record) throws ServiceException {
+        int row = 0;
+        try{
+            row = baseMapper.insertSelective(record);
+        }catch (Exception e){
+            throw  new ServiceException("Insert Exception in Service :" + e.getMessage());
+        }
+
+        return row;
     }
 
     @Override
@@ -40,8 +48,14 @@ public abstract class BaseServiceImp<T,E,PK extends Serializable> implements Bas
     }
 
     @Override
-    public int updateByPrimaryKeySelective(T record) {
-        return baseMapper.updateByPrimaryKeySelective(record);
+    public int updateByPrimaryKeySelective(T record) throws ServiceException{
+        int row = 0;
+        try{
+            row  = baseMapper.updateByPrimaryKeySelective(record);
+        }catch (Exception e){
+            throw  new ServiceException("update exception in Service ：" + e.getMessage());
+        }
+        return row;
     }
 
     @Override

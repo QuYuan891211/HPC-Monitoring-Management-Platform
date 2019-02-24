@@ -6,7 +6,10 @@ package com.nmefc.hpcmmp.common.enumPackage;
  * @Date: Created in 21:33 2019/2/23
  * @Modified By:
  */
-public enum Reminding {
+public enum ResponseMsg {
+    EXCEPTION("出现异常"),
+    REQUEST_ERROR("请求错误"),
+    SUCCESS("成功"),
     PARAMETERS_MISSING("缺少参数"),
     PAREMETERE_ERROR("参数输入违规"),
     PAREMETERE_DUPLICATION("参数重复");
@@ -14,7 +17,7 @@ public enum Reminding {
     public String getValue(){
         return value;
     }
-    Reminding(String value) {
+    ResponseMsg(String value) {
         this.value = value;
     }
 }
