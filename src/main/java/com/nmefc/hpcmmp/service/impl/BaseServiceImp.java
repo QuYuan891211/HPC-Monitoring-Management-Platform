@@ -41,7 +41,7 @@ public abstract class BaseServiceImp<T,E,PK extends Serializable> implements Bas
 
     @Override
     public int updateByPrimaryKeySelective(T record) {
-        return 0;
+        return baseMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 /**
  * @Author: QuYuan
- * @Description: 所有需要的正则表达式的枚举
+ * @Description: 所有需要的正则表达式的枚举，目前长度校验根据数据库设好的，需改为动态
  * @Date: Created in 17:52 2019/2/23
  * @Modified By:
  */
