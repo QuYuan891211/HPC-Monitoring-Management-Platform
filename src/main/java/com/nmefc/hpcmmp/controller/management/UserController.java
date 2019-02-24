@@ -90,6 +90,32 @@ public class UserController {
         }
     }
 
+    /**
+     * @description: 软删除用户
+     * @author: QuYuan
+     * @date: 15:27 2019/2/24
+     * @param: [user]
+     * @return: java.lang.String
+     */
+    @ResponseBody
+    @PostMapping(value = "/deleteUserInfo")
+    public String softDeleteUserInfo(User user){
+        String response = "SUCCESS";
+        //        更新时间设置为新建时间
+        user.setGmtModified(DateTimeUtils.date2timestamp(new Date()));
+        //更改软删除标记，MySql不支持布尔类型(自动转为tinyint类型)
+        user.setIsDelete(true);
+
+//         传递给业务层
+        try{
+            userService.updateByPrimaryKeySelective(user);
+        }catch (Exception e){
+            response = "Exception";
+            throw e;
+        }finally {
+            return response;
+        }
+    }
 
     /**
      * @description: 数据校验
