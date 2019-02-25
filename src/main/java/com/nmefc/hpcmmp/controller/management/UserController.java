@@ -3,6 +3,8 @@ package com.nmefc.hpcmmp.controller.management;
 import com.nmefc.hpcmmp.common.enumPackage.Regex;
 import com.nmefc.hpcmmp.common.enumPackage.ResponseMsg;
 import com.nmefc.hpcmmp.entity.management.User;
+import com.nmefc.hpcmmp.exception.ControllerException;
+import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.management.UserService;
 import com.nmefc.hpcmmp.common.utils.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class UserController {
     @ResponseBody
     @PostMapping(value = "/insertUserInfo")
 //    控制器完成数据校验等工作，其余业务工作交给业务层
-    public String insertUserInfo(User user){
+    public String insertUserInfo(User user) throws ControllerException {
         if(user == null || user.getId() !=null){return ResponseMsg.REQUEST_ERROR.getValue();}
         String response = ResponseMsg.SUCCESS.getValue();
         response = check(user,response);
@@ -57,7 +59,7 @@ public class UserController {
             userService.insertSelective(user);
         }catch (Exception e){
             response = ResponseMsg.EXCEPTION.getValue();
-            throw e;
+            throw new ControllerException("UserController Exception :" + e.getMessage());
         }finally {
             return response;
         }
@@ -71,7 +73,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping(value = "/updateUserInfo")
-    public String updateUserInfo(User user){
+    public String updateUserInfo(User user) throws ControllerException {
         String response = "SUCCESS";
         response = check(user,response);
         //进行数据校验
@@ -85,7 +87,7 @@ public class UserController {
             userService.updateByPrimaryKeySelective(user);
         }catch (Exception e){
             response = "Exception";
-            throw e;
+            throw new ControllerException("UserController Exception :" + e.getMessage());
         }finally {
             return response;
         }
@@ -125,7 +127,7 @@ public class UserController {
      * @param: [user, response]
      * @return: java.lang.String
      */
-    private String check(User user,String response){
+    private String check(User user,String response) throws ControllerException {
         //          1.检测必须项
         if(user == null || user.getName() ==null || user.getName().length() == 0 || user.getPassword()==null ||user.getPassword().length() == 0 || user.getAccount() == null || user.getAccount().length() == 0) {
             return ResponseMsg.PARAMETERS_MISSING.getValue();
@@ -142,7 +144,12 @@ public class UserController {
         //姓名是否违规
         if(!Regex.NAME.getDetectResult(temp2)){return ResponseMsg.PAREMETERE_ERROR.getValue(); }
         //账号是否重复
-        List<User> list = userService.accountDetected(user);
+        List<User> list = null;
+        try {
+            list = userService.accountDetected(user);
+        } catch (ServiceException e) {
+            throw new ControllerException("Check Exception : " + e.getErrorMsg());
+        }
         if(list !=null&& list.size() > 0){return ResponseMsg.PAREMETERE_DUPLICATION.getValue();}
         return response;
     }
