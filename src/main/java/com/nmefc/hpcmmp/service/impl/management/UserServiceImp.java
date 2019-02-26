@@ -4,7 +4,6 @@ import com.nmefc.hpcmmp.dao.management.UserMapper;
 import com.nmefc.hpcmmp.entity.management.User;
 import com.nmefc.hpcmmp.entity.management.UserExample;
 import com.nmefc.hpcmmp.exception.ServiceException;
-import com.nmefc.hpcmmp.service.BaseService;
 import com.nmefc.hpcmmp.service.impl.BaseServiceImp;
 import com.nmefc.hpcmmp.service.management.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

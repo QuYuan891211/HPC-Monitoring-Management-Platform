@@ -2,7 +2,6 @@ package com.nmefc.hpcmmp.service.impl.management;
 
 import com.nmefc.hpcmmp.entity.management.Role;
 import com.nmefc.hpcmmp.entity.management.RoleExample;
-import com.nmefc.hpcmmp.service.BaseService;
 import com.nmefc.hpcmmp.service.impl.BaseServiceImp;
 import com.nmefc.hpcmmp.service.management.RoleService;
 import org.springframework.stereotype.Service;

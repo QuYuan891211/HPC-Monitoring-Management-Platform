@@ -5,7 +5,6 @@ import com.nmefc.hpcmmp.common.enumPackage.ResponseMsg;
 import com.nmefc.hpcmmp.common.utils.DateTimeUtils;
 import com.nmefc.hpcmmp.entity.management.Role;
 import com.nmefc.hpcmmp.exception.ControllerException;
-import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.management.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
