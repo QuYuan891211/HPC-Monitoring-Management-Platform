@@ -12,6 +12,16 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
+  <resultMap id="UserRoleMap" type="com.nmefc.hpcmmp.entity.management.User" extends="BaseResultMap">
+    <collection property="groups" ofType="com.nmefc.hpcmmp.entity.management.Role">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="sort" jdbcType="INTEGER" property="sort" />
+      <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+      <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    </collection>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -103,6 +113,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
+  <insert id="saveRelativity" parameterType="com.nmefc.hpcmmp.entity.management.association.UserRoleAssociation">
+    INSERT into user_role_association(use_id,rol_id) VALUES (#{userID},#{roleID})
+  </insert>
+
+
+
   <insert id="insert" parameterType="com.nmefc.hpcmmp.entity.management.User">
     insert into management_user (id, account, password, 
       is_delete, sort, remark, 

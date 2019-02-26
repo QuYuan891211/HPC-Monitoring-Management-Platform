@@ -10,6 +10,7 @@ import com.nmefc.hpcmmp.common.utils.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,7 +40,7 @@ public class UserController {
     @ResponseBody
     @PostMapping(value = "/insertUserInfo")
 //    控制器完成数据校验等工作，其余业务工作交给业务层
-    public String insertUserInfo(User user) throws ControllerException {
+    public String insertUserInfo(@RequestBody User user) throws ControllerException {
         if(user == null || user.getId() !=null){return ResponseMsg.REQUEST_ERROR.getValue();}
         String response = ResponseMsg.SUCCESS.getValue();
         response = check(user,response);
@@ -93,6 +94,11 @@ public class UserController {
         }
     }
 
+
+
+
+
+
     /**
      * @description: 软删除用户
      * @author: QuYuan
@@ -141,9 +147,9 @@ public class UserController {
         List<String> temp2 = new LinkedList<String >();
         temp2.add(user.getName());
 
-        //姓名是否违规
+        //3.姓名是否违规
         if(!Regex.NAME.getDetectResult(temp2)){return ResponseMsg.PAREMETERE_ERROR.getValue(); }
-        //账号是否重复
+        //4.账号是否重复
         List<User> list = null;
         try {
             list = userService.accountDetected(user);
