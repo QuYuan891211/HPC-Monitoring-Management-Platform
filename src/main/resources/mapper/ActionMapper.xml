@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nmefc.hpcmmp.dao.management.ActionMapper">
+  <resultMap id="BaseResultMap" type="com.nmefc.hpcmmp.entity.management.Action">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="controller_name" jdbcType="VARCHAR" property="controllerName" />
+    <result column="js_function_name" jdbcType="VARCHAR" property="jsFunctionName" />
+    <result column="type_enum" jdbcType="INTEGER" property="typeEnum" />
+    <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon" />
+    <result column="icon_width" jdbcType="INTEGER" property="iconWidth" />
+    <result column="icon_height" jdbcType="INTEGER" property="iconHeight" />
+    <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
+    <result column="icon_class_name" jdbcType="VARCHAR" property="iconClassName" />
+    <result column="is_show" jdbcType="BIT" property="isShow" />
+    <result column="method_type_enum" jdbcType="INTEGER" property="methodTypeEnum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, sort, remark, gmt_create, gmt_modified, parent_id, url, area_name, method_name, 
+    controller_name, js_function_name, type_enum, menu_icon, icon_width, icon_height, 
+    icon_cls, icon_class_name, is_show, method_type_enum
+  </sql>
+  <select id="selectByExample" parameterType="com.nmefc.hpcmmp.entity.management.ActionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from management_action
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from management_action
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from management_action
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nmefc.hpcmmp.entity.management.ActionExample">
+    delete from management_action
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nmefc.hpcmmp.entity.management.Action">
+    insert into management_action (id, name, sort, 
+      remark, gmt_create, gmt_modified, 
+      parent_id, url, area_name, 
+      method_name, controller_name, js_function_name, 
+      type_enum, menu_icon, icon_width, 
+      icon_height, icon_cls, icon_class_name, 
+      is_show, method_type_enum)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{parentId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, 
+      #{methodName,jdbcType=VARCHAR}, #{controllerName,jdbcType=VARCHAR}, #{jsFunctionName,jdbcType=VARCHAR}, 
+      #{typeEnum,jdbcType=INTEGER}, #{menuIcon,jdbcType=VARCHAR}, #{iconWidth,jdbcType=INTEGER}, 
+      #{iconHeight,jdbcType=INTEGER}, #{iconCls,jdbcType=VARCHAR}, #{iconClassName,jdbcType=VARCHAR}, 
+      #{isShow,jdbcType=BIT}, #{methodTypeEnum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nmefc.hpcmmp.entity.management.Action">
+    insert into management_action
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="areaName != null">
+        area_name,
+      </if>
+      <if test="methodName != null">
+        method_name,
+      </if>
+      <if test="controllerName != null">
+        controller_name,
+      </if>
+      <if test="jsFunctionName != null">
+        js_function_name,
+      </if>
+      <if test="typeEnum != null">
+        type_enum,
+      </if>
+      <if test="menuIcon != null">
+        menu_icon,
+      </if>
+      <if test="iconWidth != null">
+        icon_width,
+      </if>
+      <if test="iconHeight != null">
+        icon_height,
+      </if>
+      <if test="iconCls != null">
+        icon_cls,
+      </if>
+      <if test="iconClassName != null">
+        icon_class_name,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="methodTypeEnum != null">
+        method_type_enum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null">
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="controllerName != null">
+        #{controllerName,jdbcType=VARCHAR},
+      </if>
+      <if test="jsFunctionName != null">
+        #{jsFunctionName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeEnum != null">
+        #{typeEnum,jdbcType=INTEGER},
+      </if>
+      <if test="menuIcon != null">
+        #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="iconWidth != null">
+        #{iconWidth,jdbcType=INTEGER},
+      </if>
+      <if test="iconHeight != null">
+        #{iconHeight,jdbcType=INTEGER},
+      </if>
+      <if test="iconCls != null">
+        #{iconCls,jdbcType=VARCHAR},
+      </if>
+      <if test="iconClassName != null">
+        #{iconClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=BIT},
+      </if>
+      <if test="methodTypeEnum != null">
+        #{methodTypeEnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nmefc.hpcmmp.entity.management.ActionExample" resultType="java.lang.Long">
+    select count(*) from management_action
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update management_action
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaName != null">
+        area_name = #{record.areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.methodName != null">
+        method_name = #{record.methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.controllerName != null">
+        controller_name = #{record.controllerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jsFunctionName != null">
+        js_function_name = #{record.jsFunctionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeEnum != null">
+        type_enum = #{record.typeEnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuIcon != null">
+        menu_icon = #{record.menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconWidth != null">
+        icon_width = #{record.iconWidth,jdbcType=INTEGER},
+      </if>
+      <if test="record.iconHeight != null">
+        icon_height = #{record.iconHeight,jdbcType=INTEGER},
+      </if>
+      <if test="record.iconCls != null">
+        icon_cls = #{record.iconCls,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconClassName != null">
+        icon_class_name = #{record.iconClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isShow != null">
+        is_show = #{record.isShow,jdbcType=BIT},
+      </if>
+      <if test="record.methodTypeEnum != null">
+        method_type_enum = #{record.methodTypeEnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update management_action
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      url = #{record.url,jdbcType=VARCHAR},
+      area_name = #{record.areaName,jdbcType=VARCHAR},
+      method_name = #{record.methodName,jdbcType=VARCHAR},
+      controller_name = #{record.controllerName,jdbcType=VARCHAR},
+      js_function_name = #{record.jsFunctionName,jdbcType=VARCHAR},
+      type_enum = #{record.typeEnum,jdbcType=INTEGER},
+      menu_icon = #{record.menuIcon,jdbcType=VARCHAR},
+      icon_width = #{record.iconWidth,jdbcType=INTEGER},
+      icon_height = #{record.iconHeight,jdbcType=INTEGER},
+      icon_cls = #{record.iconCls,jdbcType=VARCHAR},
+      icon_class_name = #{record.iconClassName,jdbcType=VARCHAR},
+      is_show = #{record.isShow,jdbcType=BIT},
+      method_type_enum = #{record.methodTypeEnum,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nmefc.hpcmmp.entity.management.Action">
+    update management_action
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null">
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        method_name = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="controllerName != null">
+        controller_name = #{controllerName,jdbcType=VARCHAR},
+      </if>
+      <if test="jsFunctionName != null">
+        js_function_name = #{jsFunctionName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeEnum != null">
+        type_enum = #{typeEnum,jdbcType=INTEGER},
+      </if>
+      <if test="menuIcon != null">
+        menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="iconWidth != null">
+        icon_width = #{iconWidth,jdbcType=INTEGER},
+      </if>
+      <if test="iconHeight != null">
+        icon_height = #{iconHeight,jdbcType=INTEGER},
+      </if>
+      <if test="iconCls != null">
+        icon_cls = #{iconCls,jdbcType=VARCHAR},
+      </if>
+      <if test="iconClassName != null">
+        icon_class_name = #{iconClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+      <if test="methodTypeEnum != null">
+        method_type_enum = #{methodTypeEnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nmefc.hpcmmp.entity.management.Action">
+    update management_action
+    set name = #{name,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      area_name = #{areaName,jdbcType=VARCHAR},
+      method_name = #{methodName,jdbcType=VARCHAR},
+      controller_name = #{controllerName,jdbcType=VARCHAR},
+      js_function_name = #{jsFunctionName,jdbcType=VARCHAR},
+      type_enum = #{typeEnum,jdbcType=INTEGER},
+      menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      icon_width = #{iconWidth,jdbcType=INTEGER},
+      icon_height = #{iconHeight,jdbcType=INTEGER},
+      icon_cls = #{iconCls,jdbcType=VARCHAR},
+      icon_class_name = #{iconClassName,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=BIT},
+      method_type_enum = #{methodTypeEnum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
