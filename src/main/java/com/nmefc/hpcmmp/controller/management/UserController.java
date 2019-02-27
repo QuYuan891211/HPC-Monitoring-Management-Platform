@@ -3,17 +3,16 @@ package com.nmefc.hpcmmp.controller.management;
 import com.nmefc.hpcmmp.common.enumPackage.Regex;
 import com.nmefc.hpcmmp.common.enumPackage.ResponseMsg;
 import com.nmefc.hpcmmp.entity.management.User;
+import com.nmefc.hpcmmp.entity.management.UserExample;
 import com.nmefc.hpcmmp.exception.ControllerException;
 import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.management.UserService;
 import com.nmefc.hpcmmp.common.utils.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -105,10 +104,32 @@ public class UserController {
         }finally {
             return response;
         }
+
+
     }
 
-
-
+    /**
+     * @description: 显示所有未软删除的用户信息
+     * @author: QuYuan
+     * @date: 21:03 2019/2/27
+     * @param: []
+     * @return: java.util.List<com.nmefc.hpcmmp.entity.management.User>
+     */
+    @ResponseBody
+    @GetMapping(value = "/findAllUser")
+    public List<User> findAllUserInfo() throws ControllerException {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andIsDeleteNotEqualTo(true);
+        List<User> userList = new ArrayList<>();
+        try{
+            userList = userService.selectByExample(userExample);
+        }catch (Exception e){
+            throw new ControllerException("UserController Exception :" + e.getMessage());
+        }finally {
+            return userList;
+        }
+    }
 
 
 
@@ -139,6 +160,49 @@ public class UserController {
         }
     }
 
+    /**
+     * @description: 根据ID找到用户信息及其角色信息
+     * @author: QuYuan
+     * @date: 21:03 2019/2/27
+     * @param: []
+     * @return: java.util.List<com.nmefc.hpcmmp.entity.management.User>
+     */
+    @ResponseBody
+    @GetMapping("/findUserById")
+    public User selectUserRoleByUserID(@RequestParam Integer userId) throws ControllerException {
+        User user = new User();
+        if(userId != null){
+            try{
+                user = userService.selectUserRoleByUserID(userId);
+            }catch (Exception e){
+                throw new ControllerException("UserController Exception :" + e.getMessage());
+            }
+        }
+        return user;
+    }
 
+
+    /**
+     * @description: 找到所有未软删除的用户信息及其角色信息
+     * @author: QuYuan
+     * @date: 21:03 2019/2/27
+     * @param: []
+     * @return: java.util.List<com.nmefc.hpcmmp.entity.management.User>
+     */
+    @ResponseBody
+    @GetMapping("/findAllUserWithRoleInfo")
+    public List<User> selectAllUserWithRoleInfo() throws ControllerException {
+       List<User> userList = new ArrayList<>();
+
+            try{
+                userList = userService.selectAllUserWithRoleInfo();
+            }catch (Exception e){
+                throw new ControllerException("UserController Exception :" + e.getMessage());
+            }finally {
+                return userList;
+            }
+
+
+    }
 
 }

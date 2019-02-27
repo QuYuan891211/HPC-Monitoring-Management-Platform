@@ -43,8 +43,8 @@ public abstract class BaseServiceImp<T,E,PK extends Serializable> implements Bas
     }
 
     @Override
-    public T selectByPrimaryKey(PK pk) {
-        return null;
+    public T selectByPrimaryKey(PK pk) throws ServiceException {
+            return baseMapper.selectByPrimaryKey(pk);
     }
 
     @Override
@@ -75,7 +75,7 @@ public abstract class BaseServiceImp<T,E,PK extends Serializable> implements Bas
 
     @Override
     public List<T> selectByExample(E example) {
-        return null;
+        return baseMapper.selectByExample(example);
     }
 
     @Override

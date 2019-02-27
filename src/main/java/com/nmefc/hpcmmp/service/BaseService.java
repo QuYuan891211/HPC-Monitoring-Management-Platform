@@ -19,7 +19,7 @@ public interface BaseService<T,E,PK extends Serializable> {
 
     int insertSelective(T record) throws ServiceException;
 
-    T selectByPrimaryKey(PK pk);
+    T selectByPrimaryKey(PK pk) throws ServiceException;
 
     int updateByPrimaryKeySelective(T record) throws ServiceException;
 

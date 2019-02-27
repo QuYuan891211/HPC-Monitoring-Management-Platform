@@ -7,7 +7,6 @@ import com.nmefc.hpcmmp.entity.management.Role;
 import com.nmefc.hpcmmp.entity.management.User;
 import com.nmefc.hpcmmp.entity.management.UserExample;
 import com.nmefc.hpcmmp.entity.management.association.UserRoleAssociation;
-import com.nmefc.hpcmmp.exception.ControllerException;
 import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.impl.BaseServiceImp;
 import com.nmefc.hpcmmp.service.management.UserService;
@@ -100,6 +99,31 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
 
     }
 
+    @Override
+    public User selectUserRoleByUserID(Integer id) {
+        User user = new User();
+        if (id == null){ return null; }
+        try {
+            user = userMapper.selectUserRoleByUserID(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return user;
+        }
+    }
+
+    @Override
+    public List<User> selectAllUserWithRoleInfo() {
+        List<User> userList = new ArrayList<>();
+        try {
+            userList =  userMapper.selectAllUserWithRoleInfo();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return userList;
+        }
+    }
+
 
     /**
      * @description: 数据校验
@@ -154,4 +178,5 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
         }
         return row;
     }
+
 }
