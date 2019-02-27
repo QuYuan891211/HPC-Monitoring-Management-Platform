@@ -37,4 +37,13 @@ public interface BaseService<T,E,PK extends Serializable> {
 
     int updateByExample(@Param("record") T record, @Param("example") E example);
 
+
+    /**
+     * @description: 数据校验
+     * @author: QuYuan
+     * @date: 0:39 2019/2/27
+     * @param: [user, response]
+     * @return: java.lang.String
+     */
+    String check(T record,String response) throws ServiceException;
 }

@@ -43,13 +43,14 @@ public class UserController {
     public String insertUserInfo(@RequestBody User user) throws ControllerException {
         if(user == null || user.getId() !=null){return ResponseMsg.REQUEST_ERROR.getValue();}
         String response = ResponseMsg.SUCCESS.getValue();
+        //进行数据校验
         try {
             response = userService.check(user,response);
         } catch (ServiceException e) {
             throw new ControllerException("Insert Exception : " + e.getErrorMsg());
 //            e.printStackTrace();
         }
-        //进行数据校验
+
         if(!response.equals(ResponseMsg.SUCCESS.getValue())){return response;}
 
 //        设置软删除标记
@@ -79,14 +80,16 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping(value = "/updateUserInfo")
-    public String updateUserInfo(User user) throws ControllerException {
+    public String updateUserInfo(@RequestBody User user) throws ControllerException  {
         String response = "SUCCESS";
+        //进行数据校验
         try {
             response = userService.check(user,response);
         } catch (Exception e) {
-            throw new ControllerException("update Exception :" + e.getMessage());
+//            throw new ControllerException("update Exception :" + e.getMessage());
+            e.printStackTrace();
         }
-        //进行数据校验
+
         if(!response.equals("SUCCESS")){return response;}
         //        更新时间设置为新建时间
         user.setGmtModified(DateTimeUtils.date2timestamp(new Date()));
@@ -98,6 +101,7 @@ public class UserController {
         }catch (Exception e){
             response = "Exception";
             throw new ControllerException("UserController Exception :" + e.getMessage());
+
         }finally {
             return response;
         }

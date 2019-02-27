@@ -31,12 +31,9 @@ public interface UserService extends BaseService<User,UserExample,Integer>{
      * @return: int
      */
     int saveRelativity(User user) throws ServiceException;
-    /**
-     * @description: 数据校验
-     * @author: QuYuan
-     * @date: 0:39 2019/2/27
-     * @param: [user, response]
-     * @return: java.lang.String
-     */
-    String check(User user,String response) throws ServiceException;
+
+
+    int deleteRelativity(Integer id) ;
+
+
 }

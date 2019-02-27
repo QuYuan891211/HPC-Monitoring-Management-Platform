@@ -118,6 +118,15 @@
     INSERT into user_role_association(use_id,rol_id) VALUES (#{userID},#{roleID})
   </insert>
 
+  <!--<update id="updateRelativity" parameterType="com.nmefc.hpcmmp.entity.management.association.UserRoleAssociation">-->
+    <!---->
+  <!--</update>-->
+<delete id="deleteRelativityByUserID" parameterType="Integer">
+  delete from user_role_association
+  WHERE
+    use_id = #{id}
+
+</delete>
 
 
   <insert id="insert" parameterType="com.nmefc.hpcmmp.entity.management.User">

@@ -10,5 +10,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper extends BaseMapper<User, UserExample, Integer> {
 
-     int saveRelativity(UserRoleAssociation userRoleAssociation) ;
+    int saveRelativity(UserRoleAssociation userRoleAssociation) ;
+
+    int deleteRelativityByUserID(Integer id);
 }

@@ -87,4 +87,6 @@ public abstract class BaseServiceImp<T,E,PK extends Serializable> implements Bas
     public int updateByExample(T record, E example) {
         return 0;
     }
+
+
 }

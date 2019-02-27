@@ -84,6 +84,22 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
         return row ;
     }
 
+    @Override
+    public int deleteRelativity(Integer id) {
+        int row = 0;
+        if(id!=null){
+            try{
+               row = userMapper.deleteRelativityByUserID(id);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+        return row;
+
+    }
+
 
     /**
      * @description: 数据校验
@@ -115,7 +131,27 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
         } catch (ServiceException e) {
             throw new ServiceException("Check Exception : " + e.getErrorMsg());
         }
-        if(list !=null&& list.size() > 0){return ResponseMsg.PAREMETERE_DUPLICATION.getValue();}
+        if(list !=null&& list.size() > 0 && list.get(0).getId() != user.getId()){return ResponseMsg.PAREMETERE_DUPLICATION.getValue();}
         return response;
+    }
+
+    /**
+     * @description: 更新用户
+     * @author: QuYuan
+     * @date: 0:49 2019/2/27
+     * @param: [user]
+     * @return: int
+     */
+    public int updateByPrimaryKeySelective(User user) throws ServiceException {
+        int row = 0;
+        try{
+            row  = userMapper.updateByPrimaryKeySelective(user);
+            deleteRelativity(user.getId());
+            saveRelativity(user);
+        }catch (Exception e){
+            throw  new ServiceException("update exception in Service ：" + e.getMessage());
+
+        }
+        return row;
     }
 }

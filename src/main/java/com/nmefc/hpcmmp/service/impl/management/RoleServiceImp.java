@@ -2,6 +2,7 @@ package com.nmefc.hpcmmp.service.impl.management;
 
 import com.nmefc.hpcmmp.entity.management.Role;
 import com.nmefc.hpcmmp.entity.management.RoleExample;
+import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.impl.BaseServiceImp;
 import com.nmefc.hpcmmp.service.management.RoleService;
 import org.springframework.stereotype.Service;
@@ -14,4 +15,8 @@ import org.springframework.stereotype.Service;
  */
 @Service("roleService")
 public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  implements RoleService{
+    @Override
+    public String check(Role record, String response) throws ServiceException {
+        return null;
+    }
 }
