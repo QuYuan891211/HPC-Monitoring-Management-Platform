@@ -67,7 +67,7 @@ public class RoleController {
         }
 //        2.检测所填各项是否合规，并补齐默认值
 //        检查是否超出长度及违规字符
-        List<String> temp1 = new LinkedList<String>();
+        List<String> temp1 = new LinkedList<>();
         temp1.add(role.getName());
         if(!Regex.NAME.getDetectResult(temp1)){return ResponseMsg.PAREMETERE_ERROR.getValue();}
         return response;
