@@ -8,7 +8,7 @@
     <!--是否在代码中显示注释-->
     <context id="context" targetRuntime="MyBatis3">
         <!--自定义plugin配置-->
-        <plugin type="com.qy.custom.plugin.BaseMapperGeneratorPlugin"></plugin>
+        <!--<plugin type="com.qy.custom.plugin.BaseMapperGeneratorPlugin"></plugin>-->
         <commentGenerator>
             <property name="suppressDate" value="true" />
             <property name="suppressAllComments" value="true" />
