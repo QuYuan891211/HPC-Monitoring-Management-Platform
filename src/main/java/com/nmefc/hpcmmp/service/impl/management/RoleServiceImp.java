@@ -11,6 +11,9 @@ import com.nmefc.hpcmmp.service.management.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nmefc.hpcmmp.dao.management.RoleMapper;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
      * @param:
      * @return:
      */
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int insertSelective(Role role) throws ServiceException {
         int row = 0;
         try{
@@ -80,6 +84,7 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
      * @return:
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int saveActionRelativity(Role role) throws ServiceException {
         int row = 0;
         List<Action> actionList = role.getActionList();
@@ -102,6 +107,7 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
      * @return:
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int saveUserRelativity(Role role) throws ServiceException {
         int row = 0;
         List<User> userList = role.getUserList();
@@ -169,6 +175,7 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
      * @return:
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int deleteRelativityWithUserByRoleID(Integer id) {
         int row = 0;
         if(id!=null){
@@ -191,6 +198,7 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
      * @return:
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int deleteRelativityWithActionByRoleID(Integer id) {
         int row = 0;
         if(id!=null){
@@ -213,6 +221,7 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
      * @return:
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int deleteRoleByID(Integer id) {
         int row = 0;
         if(id!=null){

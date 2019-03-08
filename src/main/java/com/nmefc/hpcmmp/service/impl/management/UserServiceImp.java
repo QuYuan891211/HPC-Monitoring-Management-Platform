@@ -12,6 +12,9 @@ import com.nmefc.hpcmmp.service.impl.BaseServiceImp;
 import com.nmefc.hpcmmp.service.management.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -44,6 +47,7 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
         return list;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int insertSelective(User user) throws ServiceException {
         int row = 0;
         try{
@@ -69,6 +73,7 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
      * @return: int
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int saveRelativity(User user) throws ServiceException {
         int row = 0;
         List<Role> roleList = user.getRoleList();
@@ -84,6 +89,7 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int deleteRelativity(Integer id) {
         int row = 0;
         if(id!=null){
@@ -166,6 +172,7 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
      * @param: [user]
      * @return: int
      */
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     public int updateByPrimaryKeySelective(User user) throws ServiceException {
         int row = 0;
         try{

@@ -32,6 +32,7 @@ public class HomeController {
             User record = userService.accountDetected(user).get(0);
             if (record ==null){return ResponseMsg.LOGIN_ERROR.getValue();}
                 if(!user.getPassword().equals(record.getPassword())){return ResponseMsg.PASSWORD_ERROR.getValue();}
+
         return ResponseMsg.SUCCESS.getValue();
     }
 }
