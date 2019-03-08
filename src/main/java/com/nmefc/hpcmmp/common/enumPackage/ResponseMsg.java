@@ -12,7 +12,10 @@ public enum ResponseMsg {
     SUCCESS("成功"),
     PARAMETERS_MISSING("缺少参数"),
     PAREMETERE_ERROR("参数输入违规"),
-    PAREMETERE_DUPLICATION("参数重复");
+    PAREMETERE_DUPLICATION("参数重复"),
+    LOGIN_ERROR("用户未注册"),
+    PASSWORD_ERROR("密码错误");
+
     private String value;
     public String getValue(){
         return value;
