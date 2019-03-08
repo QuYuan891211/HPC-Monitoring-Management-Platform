@@ -9,6 +9,39 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
+  <resultMap id="UserMap" type="com.nmefc.hpcmmp.entity.management.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <resultMap id="ActionMap" type="com.nmefc.hpcmmp.entity.management.Action">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="controller_name" jdbcType="VARCHAR" property="controllerName" />
+    <result column="js_function_name" jdbcType="VARCHAR" property="jsFunctionName" />
+    <result column="type_enum" jdbcType="INTEGER" property="typeEnum" />
+    <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon" />
+    <result column="icon_width" jdbcType="INTEGER" property="iconWidth" />
+    <result column="icon_height" jdbcType="INTEGER" property="iconHeight" />
+    <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
+    <result column="icon_class_name" jdbcType="VARCHAR" property="iconClassName" />
+    <result column="is_show" jdbcType="BIT" property="isShow" />
+    <result column="method_type_enum" jdbcType="INTEGER" property="methodTypeEnum" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -94,11 +127,26 @@
     delete from management_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <!--根据role的ID删除与user关联表的内容-->
+  <delete id="deleteRelativityWithUserByRoleID" parameterType="java.lang.Integer">
+    delete from user_role_association
+    where rol_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <!--根据role的ID删除与action关联表的内容-->
+  <delete id="deleteRelativityWithActionByRoleID" parameterType="java.lang.Integer">
+    delete from role_action_association
+    where role_id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.nmefc.hpcmmp.entity.management.RoleExample">
     delete from management_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
+  </delete>
+  <!--根据role的ID删除role-->
+  <delete id="deleteRoleByID" parameterType="java.lang.Integer">
+    delete from management_role
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.nmefc.hpcmmp.entity.management.Role">
     insert into management_role (id, name, remark, 
@@ -150,6 +198,14 @@
         #{gmtModified,jdbcType=TIMESTAMP},
       </if>
     </trim>
+  </insert>
+  <!--写入role和action的关系表-->
+  <insert id="saveActionRelativity" parameterType="com.nmefc.hpcmmp.entity.management.association.RoleActionAssociation">
+    INSERT into role_action_association(role_id,action_id) VALUES (#{roleID},#{actionID})
+  </insert>
+  <!--写入role和user的关系表-->
+  <insert id="saveUserRelativity" parameterType="com.nmefc.hpcmmp.entity.management.association.UserRoleAssociation">
+    INSERT into user_role_association(use_id,rol_id) VALUES (#{userID},#{roleID})
   </insert>
   <select id="countByExample" parameterType="com.nmefc.hpcmmp.entity.management.RoleExample" resultType="java.lang.Long">
     select count(*) from management_role
@@ -225,4 +281,29 @@
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--根据role的ID查找所有与之关联的user-->
+  <select id="selectRelateUserByRoleID" parameterType="java.lang.Integer" resultMap="UserMap">
+  select
+  u.id, u.account, u.password, u.sort, u.remark, u.gmt_create, u.gmt_modified, u.name
+  from management_role r
+  LEFT JOIN user_role_association ur ON  ur.rol_id = r.id
+  LEFT JOIN management_user u ON ur.use_id = u.id WHERE r.id = #{id,jdbcType = INTEGER}
+</select>
+  <!--根据role的ID查找所有与之关联的Action-->
+  <!--,a.area_name,a.method_name,a.controller_name,a.js_function_name,a.type_enum,a.menu_icon,a.icon_width,a.icon_high,a.icon_cls,a.icon_class_name,a.is_show,a.method_type_enum-->
+  <select id="selectRelateActionByRoleID" parameterType="java.lang.Integer" resultMap="ActionMap">
+  select
+  a.id, a.parent_id, a.url, a.sort, a.remark, a.gmt_create, a.gmt_modified, a.name
+  from management_role r
+  LEFT JOIN role_action_association ra ON  ra.role_id = r.id
+  LEFT JOIN management_action a ON ra.action_id = a.id WHERE r.id = #{id,jdbcType = INTEGER}
+</select>
+  <!--根据name、remark查找role-->
+  <select id="searchRoleInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select
+  *
+  from management_role r
+  where r.name like #{name,jdbcType = VARCHAR} or r.remark like #{remark,jdbcType = VARCHAR}
+</select>
+
 </mapper>

@@ -1,6 +1,7 @@
 package com.nmefc.hpcmmp.entity.management;
 
 import java.util.Date;
+import java.util.List;
 
 public class Role {
     private Integer id;
@@ -14,6 +15,26 @@ public class Role {
     private Date gmtCreate;
 
     private Date gmtModified;
+
+    private List<Action> actionList;
+
+    private List<User> userList;
+
+    public List<Action> getActionList() {
+        return actionList;
+    }
+
+    public void setActionList(List<Action> actionList) {
+        this.actionList = actionList;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
 
     public Integer getId() {
         return id;
