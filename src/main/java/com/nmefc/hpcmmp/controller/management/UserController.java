@@ -10,6 +10,7 @@ import com.nmefc.hpcmmp.service.management.UserService;
 import com.nmefc.hpcmmp.common.utils.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -201,6 +202,85 @@ public class UserController {
             }finally {
                 return userList;
             }
+
+    }
+    /**
+     * @description: 此方法为测试Shiro使用 请勿调用
+     * @author: QuYuan
+     * @date: 0:35 2019/3/10
+     * @param: [model]
+     * @return: java.lang.String
+     */
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    @ResponseBody
+    public String login(Model model) {
+
+        User user = new User();
+        user.setName("王赛超");
+        user.setAccount("wsc123123");
+        user.setPassword("d2141safad");
+        user.setIsDelete(false);
+//        记录新建时间
+        user.setGmtCreate(DateTimeUtils.date2timestamp(new Date()));
+//        更新时间设置为新建时间
+        user.setGmtModified(DateTimeUtils.date2timestamp(new Date()));
+
+        try {
+            userService.insertSelective(user);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+
+        return "创建用户成功";
+
+    }
+    /**
+     * @description: 此方法为测试Shiro使用 请勿调用
+     * @author: QuYuan
+     * @date: 0:42 2019/3/10
+     * @param: [model]
+     * @return: java.lang.String
+     */
+    @RequestMapping(value = "/del",method = RequestMethod.GET)
+    @ResponseBody
+    public String del(Model model) {
+        User user = new User();
+        user.setAccount("wsc123123");
+        List<User> userList = new ArrayList<>();
+        try {
+            userList = userService.accountDetected(user);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        String response = "删除用户名为wangsaichao用户成功";
+        //        更新时间设置为新建时间
+        userList.get(0).setGmtModified(DateTimeUtils.date2timestamp(new Date()));
+        //更改软删除标记，MySql不支持布尔类型(自动转为tinyint类型)
+        userList.get(0).setIsDelete(true);
+
+//         传递给业务层
+        try{
+            userService.updateByPrimaryKeySelective(user);
+        }catch (Exception e){
+            response = "Exception";
+            throw e;
+        }finally {
+            return response;
+        }
+    }
+
+    /**
+     * @description: 此方法为测试Shiro使用 请勿调用
+     * @author: QuYuan
+     * @date: 0:44 2019/3/10
+     * @param: [model]
+     * @return: java.lang.String
+     */
+    @RequestMapping(value = "/view",method = RequestMethod.GET)
+    @ResponseBody
+    public String view(Model model) {
+
+        return "这是用户列表页";
 
     }
 
