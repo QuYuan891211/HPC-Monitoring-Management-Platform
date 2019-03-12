@@ -12,15 +12,13 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
-  <resultMap id="UserRoleMap" type="com.nmefc.hpcmmp.entity.management.User" extends="BaseResultMap">
-    <collection property="roleList" ofType="com.nmefc.hpcmmp.entity.management.Role">
+  <resultMap id="RoleMap" type="com.nmefc.hpcmmp.entity.management.Role">
       <id column="id" jdbcType="INTEGER" property="id" />
       <result column="name" jdbcType="VARCHAR" property="name" />
       <result column="remark" jdbcType="VARCHAR" property="remark" />
       <result column="sort" jdbcType="INTEGER" property="sort" />
       <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
       <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-    </collection>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -129,22 +127,23 @@
 </delete>
 
   <!--根据UID查找没有软删除的角色信息,如果多张表有相同字段，最好使用表.字段这种方式-->
-<select id="selectUserRoleByUserID" parameterType="java.lang.Integer" resultMap="UserRoleMap">
+<select id="selectUserRoleByUserID" parameterType="java.lang.Integer" resultMap="RoleMap">
+-- u.id, u.account, u.password, u.sort, u.remark, u.gmt_create, u.gmt_modified, u.name,
   select
-  u.id, u.account, u.password, u.sort, u.remark, u.gmt_create, u.gmt_modified, u.name,r.id,r.name,r.gmt_create,r.gmt_modified,r.remark
-  from management_user u
-  LEFT JOIN user_role_association ur ON u.id = ur.use_id
-  LEFT JOIN management_role r ON ur.rol_id = r.id WHERE u.id = #{id,jdbcType = INTEGER} and u.is_delete = false
+  r.id,r.name,r.gmt_create,r.gmt_modified,r.remark
+  from management_role r
+  LEFT JOIN user_role_association ur ON r.id = ur.rol_id
+  LEFT JOIN management_user u ON ur.use_id = u.id WHERE u.id = #{id,jdbcType = INTEGER} and u.is_delete = false
 </select>
 
   <!--显示所有没有软删除的用户信息（包含其角色的信息）-->
-  <select id="selectAllUserWithRoleInfo" resultMap="UserRoleMap">
-   select
-  u.id, u.account, u.password, u.sort, u.remark, u.gmt_create, u.gmt_modified, u.name,r.id,r.name,r.gmt_create,r.gmt_modified,r.remark
-  from management_user u
-  LEFT JOIN user_role_association ur ON u.id = ur.use_id
-  LEFT JOIN management_role r ON ur.rol_id = r.id WHERE  u.is_delete = false
-  </select>
+  <!--<select id="selectAllUserWithRoleInfo" resultMap="UserRoleMap">-->
+   <!--select-->
+  <!--u.id, u.account, u.password, u.sort, u.remark, u.gmt_create, u.gmt_modified, u.name,r.id,r.name,r.gmt_create,r.gmt_modified,r.remark-->
+  <!--from management_user u-->
+  <!--LEFT JOIN user_role_association ur ON u.id = ur.use_id-->
+  <!--LEFT JOIN management_role r ON ur.rol_id = r.id WHERE  u.is_delete = false-->
+  <!--</select>-->
 
 
   <insert id="insert" parameterType="com.nmefc.hpcmmp.entity.management.User">

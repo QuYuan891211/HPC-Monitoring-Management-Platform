@@ -1,6 +1,7 @@
 package com.nmefc.hpcmmp.dao.management;
 
 import com.nmefc.hpcmmp.dao.BaseMapper;
+import com.nmefc.hpcmmp.entity.management.Role;
 import com.nmefc.hpcmmp.entity.management.User;
 import com.nmefc.hpcmmp.entity.management.UserExample;
 import java.util.List;
@@ -34,7 +35,7 @@ public interface UserMapper extends BaseMapper<User, UserExample, Integer> {
      * @param: [id]
      * @return: com.nmefc.hpcmmp.entity.management.User
      */
-    User selectUserRoleByUserID(Integer id);
+    List<Role> selectUserRoleByUserID(Integer id);
     /**
      * @description: 查找所有用户（附带角色信息）
      * @author: QuYuan
@@ -42,5 +43,5 @@ public interface UserMapper extends BaseMapper<User, UserExample, Integer> {
      * @param: []
      * @return: java.util.List<com.nmefc.hpcmmp.entity.management.User>
      */
-    List<User> selectAllUserWithRoleInfo();
+//    List<User> selectAllUserWithRoleInfo();
 }

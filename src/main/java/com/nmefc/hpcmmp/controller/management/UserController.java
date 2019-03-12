@@ -8,6 +8,7 @@ import com.nmefc.hpcmmp.exception.ControllerException;
 import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.management.UserService;
 import com.nmefc.hpcmmp.common.utils.DateTimeUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -174,7 +175,7 @@ public class UserController {
         User user = new User();
         if(userId != null){
             try{
-                user = userService.selectUserRoleByUserID(userId);
+                user.setRoleList( userService.selectUserRoleByUserID(userId));
             }catch (Exception e){
                 throw new ControllerException("UserController Exception :" + e.getMessage());
             }
@@ -190,20 +191,20 @@ public class UserController {
      * @param: []
      * @return: java.util.List<com.nmefc.hpcmmp.entity.management.User>
      */
-    @ResponseBody
-    @GetMapping("/findAllUserWithRoleInfo")
-    public List<User> selectAllUserWithRoleInfo() throws ControllerException {
-       List<User> userList = new ArrayList<>();
-
-            try{
-                userList = userService.selectAllUserWithRoleInfo();
-            }catch (Exception e){
-                throw new ControllerException("UserController Exception :" + e.getMessage());
-            }finally {
-                return userList;
-            }
-
-    }
+//    @ResponseBody
+//    @GetMapping("/findAllUserWithRoleInfo")
+//    public List<User> selectAllUserWithRoleInfo() throws ControllerException {
+//       List<User> userList = new ArrayList<>();
+//
+//            try{
+//                userList = userService.selectAllUserWithRoleInfo();
+//            }catch (Exception e){
+//                throw new ControllerException("UserController Exception :" + e.getMessage());
+//            }finally {
+//                return userList;
+//            }
+//
+//    }
     /**
      * @description: 此方法为测试Shiro使用 请勿调用
      * @author: QuYuan
@@ -211,6 +212,7 @@ public class UserController {
      * @param: [model]
      * @return: java.lang.String
      */
+    @RequiresPermissions("测试新增")
     @RequestMapping(value = "/add",method = RequestMethod.GET)
     @ResponseBody
     public String login(Model model) {
@@ -241,6 +243,7 @@ public class UserController {
      * @param: [model]
      * @return: java.lang.String
      */
+    @RequiresPermissions("测试删除")
     @RequestMapping(value = "/del",method = RequestMethod.GET)
     @ResponseBody
     public String del(Model model) {
@@ -276,6 +279,7 @@ public class UserController {
      * @param: [model]
      * @return: java.lang.String
      */
+    @RequiresPermissions("测试查看权限")
     @RequestMapping(value = "/view",method = RequestMethod.GET)
     @ResponseBody
     public String view(Model model) {

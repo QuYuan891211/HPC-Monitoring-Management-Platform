@@ -64,7 +64,7 @@ public class ShiroRealm extends AuthorizingRealm{
         }
 
         //配置自定义权限登录器，参考博客
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,user.getPassword(),getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userList.get(0),userList.get(0).getPassword(),getName());
         return info;
     }
 
@@ -98,12 +98,12 @@ public class ShiroRealm extends AuthorizingRealm{
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        List<Role> roleList =  userService.selectUserRoleByUserID(user.getId()).getRoleList();
+        List<Role> roleList =  userService.selectUserRoleByUserID(user.getId());
         SimpleAuthorizationInfo authorizationInfo =  new SimpleAuthorizationInfo();
 
         for(Role role:roleList){
             authorizationInfo.addRole(role.getName());
-            List<Action> actionList;
+            List<Action> actionList = new ArrayList<>();
             actionList = roleService.selectRelateActionByRole(role);
             for(Action action:actionList){
                 authorizationInfo.addStringPermission(action.getName());

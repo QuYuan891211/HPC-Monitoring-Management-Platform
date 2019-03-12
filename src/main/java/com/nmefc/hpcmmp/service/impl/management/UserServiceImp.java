@@ -106,29 +106,30 @@ public class UserServiceImp extends BaseServiceImp<User,UserExample,Integer> imp
     }
 
     @Override
-    public User selectUserRoleByUserID(Integer id) {
+    public List<Role> selectUserRoleByUserID(Integer id) {
         User user = new User();
         if (id == null){ return null; }
+        List<Role> list = new ArrayList<>();
         try {
-            user = userMapper.selectUserRoleByUserID(id);
+            list = userMapper.selectUserRoleByUserID(id);
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            return user;
+            return list;
         }
     }
 
-    @Override
-    public List<User> selectAllUserWithRoleInfo() {
-        List<User> userList = new ArrayList<>();
-        try {
-            userList =  userMapper.selectAllUserWithRoleInfo();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            return userList;
-        }
-    }
+//    @Override
+//    public List<User> selectAllUserWithRoleInfo() {
+//        List<User> userList = new ArrayList<>();
+//        try {
+//            userList =  userMapper.selectAllUserWithRoleInfo();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }finally {
+//            return userList;
+//        }
+//    }
 
 
     /**
