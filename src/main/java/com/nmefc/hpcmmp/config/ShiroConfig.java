@@ -1,5 +1,6 @@
 package com.nmefc.hpcmmp.config;
 
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -74,8 +75,8 @@ public class ShiroConfig {
         //配置记住我 参考博客：
         //securityManager.setRememberMeManager(rememberMeManager());
 
-        //配置 redis缓存管理器 参考博客：
-        //securityManager.setCacheManager(getEhCacheManager());
+        //配置 ehcache缓存管理器 参考博客：
+        securityManager.setCacheManager(getEhCacheManager());
 
         //配置自定义session管理，使用redis 参考博客：
         //securityManager.setSessionManager(sessionManager());
@@ -105,7 +106,17 @@ public class ShiroConfig {
      */
     @Bean
     public ShiroRealm getShiroRealm() {
-        return new ShiroRealm();
+        ShiroRealm shiroRealm = new ShiroRealm();
+        shiroRealm.setCachingEnabled(true);
+        //启用身份验证缓存，即缓存AuthenticationInfo信息，默认false
+        shiroRealm.setAuthenticationCachingEnabled(true);
+        //缓存AuthenticationInfo信息的缓存名称 在ehcache-shiro.xml中有对应缓存的配置
+        shiroRealm.setAuthenticationCacheName("authenticationCache");
+        //启用授权缓存，即缓存AuthorizationInfo信息，默认false
+        shiroRealm.setAuthorizationCachingEnabled(true);
+        //缓存AuthorizationInfo信息的缓存名称  在ehcache-shiro.xml中有对应缓存的配置
+        shiroRealm.setAuthorizationCacheName("authorizationCache");
+        return shiroRealm;
     }
 //    /**
 //     * @description: 使用shiro控制按钮
@@ -140,5 +151,19 @@ public class ShiroConfig {
         advisorAutoProxyCreator.setProxyTargetClass(true);
         return advisorAutoProxyCreator;
 
+    }
+
+    /**
+     * @description: 缓存管理器
+     * @author: QuYuan
+     * @date: 14:50 2019/3/14
+     * @param: []
+     * @return: org.apache.shiro.cache.ehcache.EhCacheManager
+     */
+    @Bean
+    public EhCacheManager getEhCacheManager(){
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:shiro/ehcache-shiro.xml");
+        return cacheManager;
     }
 }

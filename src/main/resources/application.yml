@@ -36,7 +36,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: com.nmefc.hpcmmp.entity.**  # 注意：对应实体类的路径
-
+# spring boot集成mybatis的方式打印sql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #pagehelper
 pagehelper:
     helperDialect: mysql
@@ -44,3 +46,4 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
     returnPageInfo: check
+
