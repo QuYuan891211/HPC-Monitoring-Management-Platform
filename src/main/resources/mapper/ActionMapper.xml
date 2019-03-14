@@ -23,6 +23,14 @@
     <result column="is_show" jdbcType="BIT" property="isShow" />
     <result column="method_type_enum" jdbcType="INTEGER" property="methodTypeEnum" />
   </resultMap>
+  <resultMap id="RoleMap" type="com.nmefc.hpcmmp.entity.management.Role">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -106,7 +114,34 @@
     from management_action
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!--根据相同URL的action-->
+  <select id="checkURL" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from management_action
+    where url = #{url,jdbcType=VARCHAR}
+  </select>
+  <!--根据action的ID查找所有与之关联的role-->
+  <select id="selectRelateRoleByActionID" parameterType="java.lang.Integer" resultMap="RoleMap">
+  select
+  r.id, r.sort, r.remark, r.gmt_create, r.gmt_modified, r.name
+  from management_action a
+  LEFT JOIN role_action_association ra ON  ra.action_id = a.id
+  LEFT JOIN management_role r ON ra.role_id = r.id WHERE a.id = #{id,jdbcType = INTEGER}
+  </select>
+  <!--根据name、remark查找action-->
+  <select id="searchActionInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select
+  *
+  from management_action a
+  where a.name like #{name,jdbcType = VARCHAR} or a.remark like #{remark,jdbcType = VARCHAR}or a.controller_name like #{controllerName,jdbcType = VARCHAR}or a.area_name like #{areaName,jdbcType = VARCHAR}or a.method_name like #{methodName,jdbcType = VARCHAR}
+</select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from management_action
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <!--根据action的ID删除action-->
+  <delete id="deleteActionByID" parameterType="java.lang.Integer">
     delete from management_action
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -115,6 +150,11 @@
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
+  </delete>
+  <!--根据action的ID删除与role关联表的内容-->
+  <delete id="deleteRelativityWithRoleByActionID" parameterType="java.lang.Integer">
+    delete from role_action_association
+    where action_id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.nmefc.hpcmmp.entity.management.Action">
     insert into management_action (id, name, sort, 
@@ -258,6 +298,10 @@
         #{methodTypeEnum,jdbcType=INTEGER},
       </if>
     </trim>
+  </insert>
+  <!--写入role和action的关系表-->
+  <insert id="saveRoleRelativity" parameterType="com.nmefc.hpcmmp.entity.management.association.RoleActionAssociation">
+    INSERT into role_action_association(role_id,action_id) VALUES (#{roleID},#{actionID})
   </insert>
   <select id="countByExample" parameterType="com.nmefc.hpcmmp.entity.management.ActionExample" resultType="java.lang.Long">
     select count(*) from management_action

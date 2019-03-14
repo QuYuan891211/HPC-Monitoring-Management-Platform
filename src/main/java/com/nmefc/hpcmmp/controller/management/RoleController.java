@@ -108,11 +108,15 @@ public class RoleController {
 //        关联权限在业务层中完成
 //         传递给业务层
         try{
+//            修改role
             roleService.updateByPrimaryKeySelective(role);
+//            删除与action的关联
             roleService.deleteRelativityWithActionByRoleID(role.getId());
-            roleService.deleteRelativityWithUserByRoleID(role.getId());
+//            此处不进行与user的关联，该功能在user中进行
+//            roleService.deleteRelativityWithUserByRoleID(role.getId());
+//            重做与action的关联
             roleService.saveActionRelativity(role);
-            roleService.saveUserRelativity(role);
+//            roleService.saveUserRelativity(role);
         }catch (Exception e){
             response = ResponseMsg.EXCEPTION.getValue();
             throw new ControllerException("RoleController Exception :" + e.getMessage());
@@ -147,33 +151,35 @@ public class RoleController {
 
 
 
-    /**
-     *@description:检查是否有关联项，查找所有关联项，并返回关联的user和action
-     *@date:2019.03.04
-     *@author:Li Fei
-     * @param:输入ID即可
-     * {
-     * 	"id": 1
-     * }
-     * @return:
-     */
-    @ResponseBody
-    @PostMapping(value = "/checkRoleRelate")
-    public RolesRelate checkRoleRelate(@RequestBody Role role) throws ControllerException {
-
-        RolesRelate rolesRelate=new RolesRelate();
-        //检查所有关联
-        try{
-            rolesRelate=checkRolesRelate(role);
-        }
-        catch (Exception e){
-            throw new ControllerException("RoleController Exception :" + e.getMessage());
-        }
-        finally {
-            return rolesRelate;
-        }
-
-    }
+//    /**
+//     *@description:检查是否有关联项，查找所有关联项，并返回关联的user和action
+//     *@date:2019.03.04
+//     *@author:Li Fei
+//     * @param:输入ID即可
+//     * {
+//     * 	"id": 1
+//     * }
+//     * @return:
+//     */
+//    @ResponseBody
+//    @PostMapping(value = "/checkRoleRelate")
+//    public Role checkRoleRelate(@RequestBody Role role) throws ControllerException {
+//
+//        RolesRelate rolesRelate=new RolesRelate();
+//        //检查所有关联
+//        try{
+//            rolesRelate=checkRolesRelate(role);
+//            role.setActionList(rolesRelate.actionList);
+//            role.setUserList(rolesRelate.userList);
+//        }
+//        catch (Exception e){
+//            throw new ControllerException("RoleController Exception :" + e.getMessage());
+//        }
+//        finally {
+//            return role;
+//        }
+//
+//    }
 
     /**
      *@description:查找所有关联项，并返回关联的user和action
