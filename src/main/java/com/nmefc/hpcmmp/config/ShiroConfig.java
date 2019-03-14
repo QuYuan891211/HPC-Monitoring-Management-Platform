@@ -8,6 +8,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -68,10 +69,10 @@ public class ShiroConfig {
 
 
     @Bean
-    public SecurityManager getSecurityManager(@Qualifier("getShiroRealm") ShiroRealm shiroRealm) {
+    public SecurityManager getSecurityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //设置自定义realm.
-        securityManager.setRealm(shiroRealm);
+        securityManager.setRealm(getShiroRealm());
         //配置记住我 参考博客：
         //securityManager.setRememberMeManager(rememberMeManager());
 
@@ -165,5 +166,13 @@ public class ShiroConfig {
         EhCacheManager cacheManager = new EhCacheManager();
         cacheManager.setCacheManagerConfigFile("classpath:shiro/ehcache-shiro.xml");
         return cacheManager;
+    }
+
+    @Bean
+    public MethodInvokingFactoryBean getMethodInvokingFactoryBean(){
+        MethodInvokingFactoryBean factoryBean = new MethodInvokingFactoryBean();
+        factoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
+        factoryBean.setArguments(new Object[]{getSecurityManager()});
+        return factoryBean;
     }
 }

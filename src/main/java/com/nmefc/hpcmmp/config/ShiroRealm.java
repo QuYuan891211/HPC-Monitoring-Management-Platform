@@ -113,4 +113,62 @@ public class ShiroRealm extends AuthorizingRealm{
     }
 
 
+
+    /**
+     * 重写方法,清除当前用户的的 授权缓存
+     * @param principals
+     */
+    @Override
+    public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthorizationInfo(principals);
+    }
+
+    /**
+     * 重写方法，清除当前用户的 认证缓存
+     * @param principals
+     */
+    @Override
+    public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthenticationInfo(principals);
+    }
+
+    @Override
+    public void clearCache(PrincipalCollection principals) {
+        super.clearCache(principals);
+    }
+
+    /**
+     * @description: 清除当前subject的授权缓存
+     * @author: QuYuan
+     * @date: 15:40 2019/3/14
+     * @param: []
+     * @return: void
+     */
+    public void clearAllCachedAuthorizationInfo() {
+        getAuthorizationCache().clear();
+    }
+
+    /**
+     * @description: 清除当前subject的认证
+     * @author: QuYuan
+     * @date: 15:41 2019/3/14
+     * @param: []
+     * @return: void
+     */
+    public void clearAllCachedAuthenticationInfo() {
+        getAuthenticationCache().clear();
+    }
+
+    /**
+     * @description: 清除所有缓存
+     * @author: QuYuan
+     * @date: 15:42 2019/3/14
+     * @param: []
+     * @return: void
+     */
+    public void clearAllCache() {
+        clearAllCachedAuthenticationInfo();
+        clearAllCachedAuthorizationInfo();
+    }
+
 }
