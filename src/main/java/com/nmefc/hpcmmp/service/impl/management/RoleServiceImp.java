@@ -225,6 +225,13 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
         return row;
     }
 
+    /**
+     *@description:模糊查找role
+     *@date:2019.03.08
+     *@author:Li Fei
+     * @param:
+     * @return:
+     */
     @Override
     public List<Role> searchRoleInfo(String name, String remark) {
         List<Role> role=new ArrayList<>();
