@@ -1,6 +1,8 @@
 package com.nmefc.hpcmmp.service.impl.management;
 
 import com.nmefc.hpcmmp.common.transPara.RolesRelate;
+import com.nmefc.hpcmmp.common.utils.CacheUtils;
+import com.nmefc.hpcmmp.config.ShiroRealm;
 import com.nmefc.hpcmmp.dao.management.UserMapper;
 import com.nmefc.hpcmmp.entity.management.*;
 import com.nmefc.hpcmmp.entity.management.association.UserRoleAssociation;
@@ -8,6 +10,8 @@ import com.nmefc.hpcmmp.entity.management.association.*;
 import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.impl.BaseServiceImp;
 import com.nmefc.hpcmmp.service.management.RoleService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nmefc.hpcmmp.dao.management.RoleMapper;
@@ -46,6 +50,7 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
                 //注意此时role是没有ID的(Hibernate有数据自动回填，mybatis没有，需要思考解决策略)，需要从数据库中查出ID
                 role.setId(modifiedDetected(role).get(0).getId());
                 saveActionRelativity(role);
+
             }
         }catch (Exception e){
             throw  new ServiceException("Insert Exception in Service :" + e.getMessage());
@@ -92,6 +97,8 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
             RoleActionAssociation roleActionAssociation = new RoleActionAssociation(role.getId(),action.getId());
             try {
                 row = roleMapper.saveActionRelativity(roleActionAssociation);
+                //因为权限关联发生变动，清除缓存-----清除在缓存中的权限信息
+                CacheUtils.clearAllCache();
             }catch(Exception e){
                 throw  new ServiceException("Save Relativity Exception :" + e.getMessage());
             }
@@ -204,6 +211,8 @@ public class RoleServiceImp extends BaseServiceImp<Role,RoleExample,Integer>  im
         if(id!=null){
             try{
                 row = roleMapper.deleteRelativityWithActionByRoleID(id);
+                //因为权限关联发生变动，清除缓存-----清除在缓存中的权限信息
+                CacheUtils.clearAllCache();
             }catch (Exception e){
                 e.printStackTrace();
             }

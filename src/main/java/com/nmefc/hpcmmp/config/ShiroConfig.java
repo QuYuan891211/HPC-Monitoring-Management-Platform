@@ -2,10 +2,18 @@ package com.nmefc.hpcmmp.config;
 
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.SessionListener;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
@@ -13,6 +21,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 
 /**
@@ -80,7 +90,7 @@ public class ShiroConfig {
         securityManager.setCacheManager(getEhCacheManager());
 
         //配置自定义session管理，使用redis 参考博客：
-        //securityManager.setSessionManager(sessionManager());
+        securityManager.setSessionManager(getSessionManager());
 
         return securityManager;
     }
@@ -175,4 +185,72 @@ public class ShiroConfig {
         factoryBean.setArguments(new Object[]{getSecurityManager()});
         return factoryBean;
     }
+    /**
+     * @description: 配置ID会话生成器
+     * @author: QuYuan
+     * @date: 22:12 2019/3/14
+     * @param: []
+     * @return: org.apache.shiro.session.mgt.eis.SessionIdGenerator
+     */
+    @Bean
+    public SessionIdGenerator getSessionIdGenerator(){
+        return new JavaUuidSessionIdGenerator();
+    }
+    @Bean
+    public ShiroSessionListener getShiroSessionListener(){
+        return new ShiroSessionListener();
+
+    }
+
+    /**
+     * @description: 配置 SessionDao
+     * @author: QuYuan
+     * @date: 10:52 2019/3/15
+     * @param: []
+     * @return: org.apache.shiro.session.mgt.eis.SessionDAO
+     */
+    @Bean
+    public SessionDAO sessionDAO(){
+        EnterpriseCacheSessionDAO enterpriseCacheSessionDAO = new EnterpriseCacheSessionDAO();
+        enterpriseCacheSessionDAO.setCacheManager(getEhCacheManager());
+        enterpriseCacheSessionDAO.setActiveSessionsCacheName("shiro-activeSessionCache");
+        enterpriseCacheSessionDAO.setSessionIdGenerator(getSessionIdGenerator());
+        return enterpriseCacheSessionDAO;
+    }
+
+    /**
+     * @description: 将Session存入cookie中
+     * @author: QuYuan
+     * @date: 11:05 2019/3/15
+     * @param: []
+     * @return: org.apache.shiro.web.servlet.SimpleCookie
+     */
+    @Bean
+    public SimpleCookie getSessionIdCookie(){
+        SimpleCookie simpleCookie = new SimpleCookie("sid");
+        simpleCookie.setHttpOnly(true);
+        simpleCookie.setPath("/");
+        //maxAge=-1表示浏览器关闭时失效此Cookie
+        simpleCookie.setMaxAge(-1);
+        return simpleCookie;
+    }
+
+    @Bean
+    public SessionManager getSessionManager() {
+
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        Collection<SessionListener> listeners = new ArrayList<SessionListener>();
+        //配置监听
+        listeners.add(getShiroSessionListener());
+        sessionManager.setSessionListeners(listeners);
+        sessionManager.setSessionIdCookie(getSessionIdCookie());
+        sessionManager.setSessionDAO(sessionDAO());
+        sessionManager.setCacheManager(getEhCacheManager());
+
+        return sessionManager;
+
+    }
+
+
+
 }
