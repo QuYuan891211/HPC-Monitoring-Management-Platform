@@ -1,9 +1,11 @@
 package com.nmefc.hpcmmp.controller.home;
 
+import com.nmefc.hpcmmp.config.ShiroSessionListener;
 import com.nmefc.hpcmmp.entity.management.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +25,9 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class LoginController {
+
+    @Autowired
+    private ShiroSessionListener  getShiroSessionListener;
 
     /**
      * @description: 用户访问根目录
@@ -74,6 +79,7 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
         try{
             subject.login(usernamePasswordToken);
+
             User user = (User)subject.getPrincipal();
             session.setAttribute("user",user);
             model.addAttribute("user",user);
@@ -101,6 +107,7 @@ public class LoginController {
             return "login";
         }else{
             model.addAttribute("user",user);
+            model.addAttribute("count",getShiroSessionListener.getSessionCount());
             return "index";
         }
     }
