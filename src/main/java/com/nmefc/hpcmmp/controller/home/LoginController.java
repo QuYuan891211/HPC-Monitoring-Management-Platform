@@ -1,8 +1,12 @@
 package com.nmefc.hpcmmp.controller.home;
 
+import com.nmefc.hpcmmp.config.RetryLimitHashedCredentialsMatcher;
 import com.nmefc.hpcmmp.config.ShiroSessionListener;
 import com.nmefc.hpcmmp.entity.management.User;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,8 @@ public class LoginController {
     @Autowired
     private ShiroSessionListener  getShiroSessionListener;
 
+    @Autowired
+    private RetryLimitHashedCredentialsMatcher getRetryLimitHashedCredentialsMatcher;
     /**
      * @description: 用户访问根目录
      * @author: QuYuan
@@ -86,8 +92,20 @@ public class LoginController {
             return "index";
         }catch (Exception e){
             String exception = (String) request.getAttribute("shiroLoginFailure");
-            model.addAttribute("msg",e.getMessage());
-            return "login";
+            String test = "test: ";
+            if(e instanceof UnknownAccountException){
+                model.addAttribute("msg","用户未注册");
+                test = "用户未注册";
+            }
+            if(e instanceof IncorrectCredentialsException){
+                model.addAttribute("msg","密码错误");
+                test = "密码错误";
+            }
+            if(e instanceof LockedAccountException){
+                model.addAttribute("msg","用户已被锁定，请联系管理员");
+                test = "用户被锁定，请联系管理员";
+            }
+            return test;
         }
     }
 
@@ -138,6 +156,14 @@ public class LoginController {
     @ResponseBody
     public String unauthorized(HttpSession session, Model model) {
         return "unauthorized";
+    }
+
+    @RequestMapping(value = "/unlockAccount",method = RequestMethod.POST)
+    @ResponseBody
+    public String unlockedAccount(Model model,String account){
+        getRetryLimitHashedCredentialsMatcher.unlockAccount(account);
+        String msg = "解锁成功";
+        return msg;
     }
 
 }

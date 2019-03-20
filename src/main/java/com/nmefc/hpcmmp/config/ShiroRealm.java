@@ -24,7 +24,7 @@ import java.util.Set;
 
 /**
  * @Author: QuYuan
- * @Description:  在认证、授权内部实现机制中都有提到，最终处理都将交给Real进行处理。因为在Shiro中，最终是通过Realm来获取应用程序中的用户、角色及权限信息的。通常情况下，在Realm中会直接从我们的数据源中获取Shiro需要的验证信息。可以说，Realm是专用于安全框架的DAO.
+ * @Description:  在认证、授权内部实现机制中都有提到，最终处理都将交给Realm进行处理。因为在Shiro中，最终是通过Realm来获取应用程序中的用户、角色及权限信息的。通常情况下，在Realm中会直接从我们的数据源中获取Shiro需要的验证信息。可以说，Realm是专用于安全框架的DAO.
  * @Date: Created in 15:57 2019/3/9
  * @Modified By:
  */
@@ -59,10 +59,13 @@ public class ShiroRealm extends AuthorizingRealm{
         if(userList.size() == 0){
             throw new UnknownAccountException("该用户名未注册");
         }
-        if (!password.equals(userList.get(0).getPassword())){
-            throw new IncorrectCredentialsException("密码错误");
+//        将密码的比较交给底层密码比较器
+//        if (!password.equals(userList.get(0).getPassword())){
+//            throw new IncorrectCredentialsException("密码错误");
+//        }
+        if(userList.get(0).getIsLocked()){
+            throw new LockedAccountException("该账户已被锁定，请联系管理员");
         }
-
         //配置自定义权限登录器，参考博客
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userList.get(0),userList.get(0).getPassword(),getName());
         return info;

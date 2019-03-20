@@ -215,7 +215,7 @@ public class UserController {
     @RequiresPermissions("测试新增")
     @RequestMapping(value = "/add",method = RequestMethod.GET)
     @ResponseBody
-    public String login(Model model) {
+    public String add(Model model) {
 
         User user = new User();
         user.setName("王赛超");

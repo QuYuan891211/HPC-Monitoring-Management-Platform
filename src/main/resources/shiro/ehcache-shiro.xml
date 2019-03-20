@@ -79,5 +79,12 @@
            overflowToDisk="false"
            statistics="true">
     </cache>
-
+    <cache name="passwordRetryCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="300"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
 </ehcache>

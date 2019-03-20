@@ -11,6 +11,7 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="is_locked" jdbcType="BIT" property="isLocked" />
   </resultMap>
   <resultMap id="RoleMap" type="com.nmefc.hpcmmp.entity.management.Role">
       <id column="id" jdbcType="INTEGER" property="id" />
@@ -79,7 +80,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, password, is_delete, sort, remark, gmt_create, gmt_modified, name
+    id, account, password, is_delete, sort, remark, gmt_create, gmt_modified, name, is_locked
   </sql>
   <select id="selectByExample" parameterType="com.nmefc.hpcmmp.entity.management.UserExample" resultMap="BaseResultMap">
     select
@@ -299,6 +300,9 @@
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isLocked != null">
+        is_locked = #{isLocked,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

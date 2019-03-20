@@ -50,7 +50,7 @@ public class ShiroConfig {
         //1.设置安全管理器接口
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //2.设置登录页面
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/");
         //3.设置登陆成功后跳转的页面
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //4.未授权界面,该配置无效，并不会进行页面跳转
@@ -130,6 +130,7 @@ public class ShiroConfig {
         shiroRealm.setAuthorizationCachingEnabled(true);
         //缓存AuthorizationInfo信息的缓存名称  在ehcache-shiro.xml中有对应缓存的配置
         shiroRealm.setAuthorizationCacheName("authorizationCache");
+        shiroRealm.setCredentialsMatcher(getRetryLimitHashedCredentialsMatcher());
         return shiroRealm;
     }
 //    /**
@@ -283,6 +284,17 @@ public class ShiroConfig {
         return kickoutSessionControlFilter;
     }
 
-
+    /**
+     * @description: 配置登陆重复次数比较器
+     * @author: QuYuan
+     * @date: 15:12 2019/3/20
+     * @param: []
+     * @return: com.nmefc.hpcmmp.config.RetryLimitHashedCredentialsMatcher
+     */
+    @Bean
+public RetryLimitHashedCredentialsMatcher getRetryLimitHashedCredentialsMatcher(){
+        RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(getEhCacheManager());
+        return retryLimitHashedCredentialsMatcher;
+}
 
 }

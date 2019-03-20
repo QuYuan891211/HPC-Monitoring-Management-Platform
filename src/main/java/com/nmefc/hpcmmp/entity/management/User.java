@@ -22,6 +22,8 @@ public class User {
 
     private String name;
 
+    private Boolean isLocked;
+
     private List<Role> roleList;
 
     public List<Role> getRoleList() {
@@ -104,5 +106,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public boolean getIsLocked() {
+        return isLocked;
+    }
+
+    public void setIsLocked(Boolean locked) {
+        isLocked = locked;
     }
 }
