@@ -3,7 +3,9 @@ package com.nmefc.hpcmmp.ActivitiTest;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Task;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -99,7 +101,9 @@ public class ProcessDefinitionManager {
      */
     @Test
     public void deleteProcessDefi(){
-        String key = "2501";
+        String key = "1";
         processEngine.getRepositoryService().deleteDeployment(key);
     }
+
+
 }
