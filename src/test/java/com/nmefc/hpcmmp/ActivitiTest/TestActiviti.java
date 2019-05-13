@@ -3,6 +3,8 @@ package com.nmefc.hpcmmp.ActivitiTest;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.ProcessEngines;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.junit.Test;
 
 
@@ -13,15 +15,16 @@ import org.junit.Test;
  * @Modified By:
  */
 public class TestActiviti {
-    /**
-     * @description: 获取工具流引擎
-     * @author: QuYuan
-     * @date: 11:12 2019/5/13
-     * @param: []
-     * @return: void
-     */
-    @Test
-    public void createProcessEngine(){
+    private ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+//    /**
+//     * @description: 获取工具流引擎
+//     * @author: QuYuan
+//     * @date: 11:12 2019/5/13
+//     * @param: []
+//     * @return: void
+//     */
+  //  @Test
+ //   public void createProcessEngine(){
         //1. 方式1 使用代码方式创建
 //        ProcessEngineConfiguration engineConfiguration = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
 //        //1.1. 获取引擎
@@ -44,7 +47,23 @@ public class TestActiviti {
 //        System.out.println("加载配置文件创建引擎");
         //3. 通过流程引擎自动加载
         //默认会加载类路径下的activiti.cfg.xml
-        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-        System.out.println("通过ProcessEngine获取到流程引擎");
+
+
+  //  }
+    /**
+     * @description: 部署
+     * @author: QuYuan
+     * @date: 17:21 2019/5/13
+     * @param:
+     * @return:
+     */
+    @Test
+    public void deploy(){
+        RepositoryService repositoryService = processEngine.getRepositoryService();
+        repositoryService.createDeployment().addClasspathResource("diagram/LeaveBill.bpmn")
+        .name("请求单流程")
+        .category("办公类别")
+        .deploy();
+        System.out.println("部署完成");
     }
 }
