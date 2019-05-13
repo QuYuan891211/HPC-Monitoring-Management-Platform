@@ -1,0 +1,40 @@
+package com.nmefc.hpcmmp.ActivitiTest;
+
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.ProcessEngineConfiguration;
+import org.junit.Test;
+
+/**
+ * @Author: QuYuan
+ * @Description: 模拟工作流框架
+ * @Date: Created in 10:47 2019/5/13
+ * @Modified By:
+ */
+public class TestActiviti {
+    /**
+     * @description: 获取工具流引擎
+     * @author: QuYuan
+     * @date: 11:12 2019/5/13
+     * @param: []
+     * @return: void
+     */
+    @Test
+    public void createProcessEngine(){
+        //1. 方式1 使用代码方式创建
+        ProcessEngineConfiguration engineConfiguration = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+        //1.1. 获取引擎
+        engineConfiguration.setJdbcDriver("com.mysql.jdbc.Driver");
+        engineConfiguration.setJdbcUrl("jdbc:mysql://localhost:3306/activitiDB?createDatabaseIfNotExist=true"
+                +"&useUnicode=true&characterEncoding=utf8");
+        engineConfiguration.setJdbcUsername("root");
+        engineConfiguration.setJdbcPassword("admin123");
+        //1.2. 设置建表策略
+        //		  public static final java.lang.String DB_SCHEMA_UPDATE_FALSE = "false";//不会自动创建表，没有表，则抛异常
+        //		  public static final java.lang.String DB_SCHEMA_UPDATE_CREATE_DROP = "create-drop";//先删除，再创建表
+        //		  public static final java.lang.String DB_SCHEMA_UPDATE_TRUE = "true";//假如没有表，则自动创建
+        engineConfiguration.setDatabaseSchemaUpdate("true");
+        //1.3 生成引擎
+        ProcessEngine processEngine = engineConfiguration.buildProcessEngine();
+        System.out.println("流程引擎创建成功");
+    }
+}
