@@ -3,7 +3,10 @@ package com.nmefc.hpcmmp.ActivitiTest;
 import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.junit.Test;
+
+import java.util.List;
 
 
 /**
@@ -88,6 +91,29 @@ public class TestActiviti {
      */
     @Test
     public void queryTask(){
-        
+        String assignee = "王五";
+        TaskService taskService = processEngine.getTaskService();
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(assignee).list();
+        if(taskList != null && taskList.size()>0){
+            for(Task task:taskList){
+                System.out.println(task.getAssignee());
+                System.out.println(task.getId());
+                System.out.println(task.getName());
+
+            }
+        }
+    }
+    /**
+     * @description: 完成任务
+     * @author: QuYuan
+     * @date: 18:05 2019/5/13
+     * @param: []
+     * @return: void
+     */
+    @Test
+    public void completeTask(){
+        String taskId = "10002";
+        processEngine.getTaskService().complete(taskId);
+        System.out.println("当前任务完成");
     }
 }
