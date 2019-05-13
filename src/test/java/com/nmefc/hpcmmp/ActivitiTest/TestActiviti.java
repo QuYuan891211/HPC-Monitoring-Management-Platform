@@ -1,10 +1,8 @@
 package com.nmefc.hpcmmp.ActivitiTest;
 
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngineConfiguration;
-import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.RepositoryService;
+import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.junit.Test;
 
 
@@ -64,6 +62,32 @@ public class TestActiviti {
         .name("请求单流程")
         .category("办公类别")
         .deploy();
-        System.out.println("部署完成");
+    }
+    /**
+     * @description: 启动流程
+     * @author: QuYuan
+     * @date: 17:43 2019/5/13
+     * @param: []
+     * @return: void
+     */
+    @Test
+    public void startProcess(){
+        String key = "leaveBill";
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(key);
+        System.out.println("流程实例的ID" + processInstance.getProcessDefinitionId());
+        System.out.println("流程的ID" + processInstance.getId());
+        System.out.println("流程实例的ID" + processInstance.getName());
+    }
+    /**
+     * @description: 查询任务
+     * @author: QuYuan
+     * @date: 17:55 2019/5/13
+     * @param: []
+     * @return: void
+     */
+    @Test
+    public void queryTask(){
+        
     }
 }
