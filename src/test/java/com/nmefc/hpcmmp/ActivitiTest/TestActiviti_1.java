@@ -47,8 +47,8 @@ public class TestActiviti_1 {
 //        ProcessEngine processEngine = engineConfiguration.buildProcessEngine();
 //        System.out.println("加载配置文件创建引擎");
         //3. 通过流程引擎自动加载
-        //默认会加载类路径下的activiti.cfg.xml
-
+        //默认会加载资源路径下的activiti.cfg.xml
+//ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 
   //  }
     /**
