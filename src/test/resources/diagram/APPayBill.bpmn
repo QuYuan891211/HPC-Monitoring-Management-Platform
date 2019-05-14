@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1557790800819" name="" targetNamespace="http://www.activiti.org/testm1557790800819" typeLanguage="http://www.w3.org/2001/XMLSchema">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/testm1557790800819" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1557790800819" name="" targetNamespace="http://www.activiti.org/testm1557790800819" typeLanguage="http://www.w3.org/2001/XMLSchema">
   <process id="payBill" isClosed="false" isExecutable="true" name="payProcess" processType="None">
     <startEvent id="_2" name="StartEvent"/>
-    <userTask activiti:exclusive="true" id="_3" name="支付申请"/>
-    <userTask activiti:exclusive="true" id="_4" name="财务审批"/>
+    <userTask activiti:exclusive="true" id="_3" name="Buyer"/>
+    <userTask activiti:exclusive="true" id="_4" name="CFO"/>
     <endEvent id="_5" name="EndEvent"/>
     <sequenceFlow id="_6" sourceRef="_2" targetRef="_3"/>
     <sequenceFlow id="_7" sourceRef="_3" targetRef="_4"/>

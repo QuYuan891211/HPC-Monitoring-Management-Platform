@@ -11,15 +11,17 @@ import org.activiti.engine.task.Task;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: QuYuan
- * @Description: 测试流程变量
- * @Date: Created in 7:42 2019/5/14
+ * @Description: 分支情况下的工作流
+ * @Date: Created in 23:13 2019/5/14
  * @Modified By:
  */
-public class ProcessVariable {
+public class SequenceFlow_5 {
     private ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
     /**
      * @description: bpmn格式部署
@@ -31,15 +33,15 @@ public class ProcessVariable {
     @Test
     public void deployProcessDefiByBpmn(){
         processEngine.getRepositoryService().createDeployment()
-                .addClasspathResource("diagram/APPayBill.bpmn")
-                .name("支付单流程")
+                .addClasspathResource("diagram/SequenceFlow.bpmn")
+                .name("连线流程")
                 .category("办公类别")
                 .deploy();
     }
 
     @Test
     public void startProcess(){
-        String processDefikey = "payBill";
+        String processDefikey = "sequenceBill";
         ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey(processDefikey);
         System.out.println("流程对象ID " + processInstance.getId());
         System.out.println("流程定义的ID  " + processInstance.getProcessDefinitionId());//默认执行最新版本
@@ -76,8 +78,10 @@ public class ProcessVariable {
      */
     @Test
     public void completeTask(){
-        String taskId = "20002";
-        processEngine.getTaskService().complete(taskId);
+        String taskId = "50003";
+        Map<String,Object> map = new HashMap<>();
+        map.put("message","level2");
+        processEngine.getTaskService().complete(taskId,map);
         System.out.println("当前任务完成");
     }
     /**
@@ -111,13 +115,13 @@ public class ProcessVariable {
             }
         }
     }
-/**
- * @description: 查询历史任务
- * @author: QuYuan
- * @date: 20:42 2019/5/14
- * @param: []
- * @return: void
- */
+    /**
+     * @description: 查询历史任务
+     * @author: QuYuan
+     * @date: 20:42 2019/5/14
+     * @param: []
+     * @return: void
+     */
     @Test
     public void queryHistoryTask(){
         List<HistoricTaskInstance> list = processEngine.getHistoryService().createHistoricTaskInstanceQuery().processInstanceId("2501").list();
@@ -171,7 +175,7 @@ public class ProcessVariable {
      * @param: []
      * @return: void
      */
-@Test
+    @Test
     public void setVariable(){
         //1.第一次设置流程变量
         TaskService taskService = processEngine.getTaskService();
@@ -186,14 +190,14 @@ public class ProcessVariable {
 //        payBillBean.setDate(new Date());
 //    taskService.setVariable("20002","bean",payBillBean);//在整个流程实例中都有效
     }
-/**
- * @description: 获取任务变量
- * @author: QuYuan
- * @date: 20:40 2019/5/14
- * @param: []
- * @return: void
- */
-@Test
+    /**
+     * @description: 获取任务变量
+     * @author: QuYuan
+     * @date: 20:40 2019/5/14
+     * @param: []
+     * @return: void
+     */
+    @Test
     public void getVariable(){
         String taskId = "20002";
         TaskService taskService = processEngine.getTaskService();
@@ -204,6 +208,6 @@ public class ProcessVariable {
         System.out.println(cost + " " + date + " " + appayPerson);
         //获取序列化的对象变量
 //    PayBillBean bean = (PayBillBean) taskService.getVariable(taskId, "bean");
-}
+    }
 
 }

@@ -17,7 +17,7 @@ import java.util.List;
  * @Date: Created in 6:32 2019/5/14
  * @Modified By:
  */
-public class ProcessInstanceAndTask {
+public class ProcessInstanceAndTask_3 {
     private ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 @Test
     public void startProcess(){
