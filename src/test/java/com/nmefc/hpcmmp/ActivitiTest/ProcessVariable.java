@@ -76,10 +76,17 @@ public class ProcessVariable {
      */
     @Test
     public void completeTask(){
-        String taskId = "15005";
+        String taskId = "20002";
         processEngine.getTaskService().complete(taskId);
         System.out.println("当前任务完成");
     }
+    /**
+     * @description: 获取流程实例状态
+     * @author: QuYuan
+     * @date: 20:43 2019/5/14
+     * @param: []
+     * @return: void
+     */
     @Test
     public void getProcessInstanceState() {
         String processInstanceId = "2501";
@@ -104,7 +111,13 @@ public class ProcessVariable {
             }
         }
     }
-
+/**
+ * @description: 查询历史任务
+ * @author: QuYuan
+ * @date: 20:42 2019/5/14
+ * @param: []
+ * @return: void
+ */
     @Test
     public void queryHistoryTask(){
         List<HistoricTaskInstance> list = processEngine.getHistoryService().createHistoricTaskInstanceQuery().processInstanceId("2501").list();
@@ -120,7 +133,7 @@ public class ProcessVariable {
             }
         }
     }
-    @Test
+
     public void getAndSetVariable(){
         //有四种方式设置值
         TaskService taskService = processEngine.getTaskService();
@@ -151,13 +164,46 @@ public class ProcessVariable {
 //            taskService.getVariables(variableName);
 
     }
+    /**
+     * @description: 设置任务流程变量
+     * @author: QuYuan
+     * @date: 20:25 2019/5/14
+     * @param: []
+     * @return: void
+     */
 @Test
     public void setVariable(){
         //1.第一次设置流程变量
         TaskService taskService = processEngine.getTaskService();
-        taskService.setVariable("15005","cost",1000);
-        taskService.setVariable("15005","申请时间",new Date());
-        taskService.setVariableLocal("15005","申请人","何某某");
+        taskService.setVariable("20002","cost",5000);//在整个流程实例中都有效
+        taskService.setVariable("20002","申请时间",new Date());//在整个流程实例中都有效
+        taskService.setVariableLocal("20002","申请人","李某某");//本地设置一点该任务完成，这个变量就失效了
         System.out.println("设置成功");
+        //传递自定义对象
+//        PayBillBean payBillBean = new PayBillBean();
+//        payBillBean.setCost(200);
+//        payBillBean.setName("王某某");
+//        payBillBean.setDate(new Date());
+//    taskService.setVariable("20002","bean",payBillBean);//在整个流程实例中都有效
     }
+/**
+ * @description: 获取任务变量
+ * @author: QuYuan
+ * @date: 20:40 2019/5/14
+ * @param: []
+ * @return: void
+ */
+@Test
+    public void getVariable(){
+        String taskId = "20002";
+        TaskService taskService = processEngine.getTaskService();
+        Integer cost  = (Integer)taskService.getVariable(taskId,"cost");
+        Date date = (Date)taskService.getVariable(taskId,"申请时间");
+        String appayPerson = (String)taskService.getVariableLocal(taskId,"申请人");
+
+        System.out.println(cost + " " + date + " " + appayPerson);
+        //获取序列化的对象变量
+//    PayBillBean bean = (PayBillBean) taskService.getVariable(taskId, "bean");
+}
+
 }
