@@ -3,9 +3,7 @@ package com.nmefc.hpcmmp.ActivitiTest;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.task.Task;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -15,7 +13,7 @@ import java.util.zip.ZipInputStream;
 
 /**
  * @Author: QuYuan
- * @Description:
+ * @Description: 流程 定义 管理
  * @Date: Created in 18:21 2019/5/13
  * @Modified By:
  */
@@ -32,7 +30,7 @@ public class ProcessDefinitionManager_2 {
 @Test
     public void deployProcessDefiByBpmn(){
         processEngine.getRepositoryService().createDeployment()
-                .addClasspathResource("diagram/LeaveBill.bpmn")
+                .addClasspathResource("diagram/hotelBill.bpmn")
                 .name("请求单流程")
                 .category("办公类别")
                 .deploy();

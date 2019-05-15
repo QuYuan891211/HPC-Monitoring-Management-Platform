@@ -1,7 +1,6 @@
 package com.nmefc.hpcmmp.ActivitiTest;
 
 import org.activiti.engine.*;
-import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.junit.Test;
@@ -61,9 +60,9 @@ public class TestActiviti_1 {
     @Test
     public void deploy(){
         RepositoryService repositoryService = processEngine.getRepositoryService();
-        repositoryService.createDeployment().addClasspathResource("diagram/LeaveBill.bpmn")
-        .name("请求单流程")
-        .category("办公类别")
+        repositoryService.createDeployment().addClasspathResource("diagram/hotelBill2.bpmn")
+        .name("hotelProcess")
+        .category("office")
         .deploy();
     }
     /**
@@ -75,7 +74,7 @@ public class TestActiviti_1 {
      */
     @Test
     public void startProcess(){
-        String key = "leaveBill";
+        String key = "hotelBill";
         RuntimeService runtimeService = processEngine.getRuntimeService();
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(key);
         System.out.println("流程实例的ID" + processInstance.getProcessDefinitionId());
@@ -91,7 +90,7 @@ public class TestActiviti_1 {
      */
     @Test
     public void queryTask(){
-        String assignee = "王五";
+        String assignee = "lisi";
         TaskService taskService = processEngine.getTaskService();
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(assignee).list();
         if(taskList != null && taskList.size()>0){
@@ -112,7 +111,7 @@ public class TestActiviti_1 {
      */
     @Test
     public void completeTask(){
-        String taskId = "10002";
+        String taskId = "12502";
         processEngine.getTaskService().complete(taskId);
         System.out.println("当前任务完成");
     }
