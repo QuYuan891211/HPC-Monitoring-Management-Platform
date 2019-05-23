@@ -3,11 +3,13 @@ package com.nmefc.hpcmmp.workflowEngine.Imp;
 import com.nmefc.hpcmmp.workflowEngine.WorkflowService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
@@ -54,4 +56,45 @@ public class WorkFlowServiceImp implements WorkflowService{
     public List<Deployment> findDeploymentList() {
         return repositoryService.createDeploymentQuery().orderByDeploymenTime().asc().list();
     }
+/**
+ * @description: 查看流程定义信息
+ * @author: QuYuan
+ * @date: 12:21 2019/5/23
+ * @param: []
+ * @return: java.util.List<org.activiti.engine.repository.ProcessDefinition>
+ */
+    @Override
+    public List<ProcessDefinition> findProcessDefinitionList() {
+        return repositoryService.createProcessDefinitionQuery().orderByProcessDefinitionVersion().asc().list();
+    }
+/**
+ * @description: 获取流程定义的图片信息
+ * @author: QuYuan
+ * @date: 12:23 2019/5/23
+ * @param: [deploymentId, imageName]
+ * @return: java.io.InputStream
+ */
+    @Override
+    public InputStream findImageInputStream(String deploymentId, String imageName) {
+        return repositoryService.getResourceAsStream(deploymentId, imageName)
+    }
+    /**
+     * @description: 根据部署ID删除流程定义
+     * @author: QuYuan
+     * @date: 12:24 2019/5/23
+     * @param: [deploymentId]
+     * @return: void
+     */
+    @Override
+    public void deleteProcessDefinitionByDeploymentId(String deploymentId) {
+        repositoryService.deleteDeployment(deploymentId,true);
+    }
+/**
+ * @description:
+ * @author: QuYuan
+ * @date: 12:22 2019/5/23
+ * @param:
+ * @return:
+ */
+
 }

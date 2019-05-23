@@ -1,9 +1,11 @@
 package com.nmefc.hpcmmp.workflowEngine;
 
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -16,5 +18,11 @@ public interface WorkflowService {
         void deployProcessDefiByBpmn(File file, String fileName,String category) throws FileNotFoundException;
 
         List<Deployment> findDeploymentList();
+
+        List<ProcessDefinition> findProcessDefinitionList();
+
+        InputStream findImageInputStream(String deploymentId, String imageName);
+
+        void deleteProcessDefinitionByDeploymentId(String deploymentId);
 
 }
