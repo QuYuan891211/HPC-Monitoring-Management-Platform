@@ -1,7 +1,9 @@
 package com.nmefc.hpcmmp.workflowEngine;
 
+import com.nmefc.hpcmmp.workflowEngine.entity.WorkflowBean;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Task;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,5 +26,9 @@ public interface WorkflowService {
         InputStream findImageInputStream(String deploymentId, String imageName);
 
         void deleteProcessDefinitionByDeploymentId(String deploymentId);
+
+        void startProcess(WorkflowBean workflowBean);
+
+        List<Task> findTaskListByName(String name);
 
 }
