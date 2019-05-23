@@ -2,11 +2,13 @@ package com.nmefc.hpcmmp.workflowEngine.Imp;
 
 import com.nmefc.hpcmmp.workflowEngine.WorkflowService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -40,5 +42,16 @@ public class WorkFlowServiceImp implements WorkflowService{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+/**
+ * @description: 查看部署信息
+ * @author: QuYuan
+ * @date: 12:16 2019/5/23
+ * @param: []
+ * @return: java.util.List<org.activiti.engine.repository.Deployment>
+ */
+    @Override
+    public List<Deployment> findDeploymentList() {
+        return repositoryService.createDeploymentQuery().orderByDeploymenTime().asc().list();
     }
 }
