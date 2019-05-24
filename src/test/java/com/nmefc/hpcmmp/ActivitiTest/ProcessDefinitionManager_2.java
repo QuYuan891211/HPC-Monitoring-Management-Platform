@@ -27,7 +27,7 @@ public class ProcessDefinitionManager_2 {
      * @param: []
      * @return: void
      */
-@Test
+
     public void deployProcessDefiByBpmn(){
         processEngine.getRepositoryService().createDeployment()
                 .addClasspathResource("diagram/hotelBill.bpmn")
@@ -42,7 +42,7 @@ public class ProcessDefinitionManager_2 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void deployProcessDefiByZip(){
         InputStream in = getClass().getClassLoader().getResourceAsStream("leaveBill.zip");
         processEngine.getRepositoryService().createDeployment()
@@ -58,7 +58,7 @@ public class ProcessDefinitionManager_2 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void queryProcessDefi(){
         String processDefiKey = "leaveBill";
         RepositoryService repositoryService = processEngine.getRepositoryService();
@@ -97,7 +97,7 @@ public class ProcessDefinitionManager_2 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void deleteProcessDefi(){
         String key = "1";
         processEngine.getRepositoryService().deleteDeployment(key);

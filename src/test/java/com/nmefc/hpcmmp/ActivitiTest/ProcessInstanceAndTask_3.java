@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ProcessInstanceAndTask_3 {
     private ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-@Test
+
     public void startProcess(){
         String processDefikey = "leaveBill";
         ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey(processDefikey);
@@ -36,7 +36,7 @@ public class ProcessInstanceAndTask_3 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void queryTask(){
         //String assignee = "王五";
         TaskService taskService = processEngine.getTaskService();
@@ -57,13 +57,13 @@ public class ProcessInstanceAndTask_3 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void completeTask(){
         String taskId = "7502";
         processEngine.getTaskService().complete(taskId);
         System.out.println("当前任务完成");
     }
-@Test
+
     public void getProcessInstanceState() {
         String processInstanceId = "2501";
         ProcessInstance singleResult = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
@@ -74,7 +74,7 @@ public class ProcessInstanceAndTask_3 {
             System.out.println("当前实例已经结束");
         }
     }
-@Test
+
     public void queryHistoryProcessInst(){
         List<HistoricProcessInstance> list = processEngine.getHistoryService().createHistoricProcessInstanceQuery().list();
         if(list !=null&&list.size()>0){
@@ -88,7 +88,7 @@ public class ProcessInstanceAndTask_3 {
         }
     }
 
-    @Test
+
     public void queryHistoryTask(){
         List<HistoricTaskInstance> list = processEngine.getHistoryService().createHistoricTaskInstanceQuery().processInstanceId("2501").list();
         if(list !=null&&list.size()>0){
