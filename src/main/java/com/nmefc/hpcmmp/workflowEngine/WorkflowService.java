@@ -3,6 +3,7 @@ package com.nmefc.hpcmmp.workflowEngine;
 import com.nmefc.hpcmmp.workflowEngine.entity.WorkflowBean;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 
 import java.io.File;
@@ -16,7 +17,7 @@ import java.util.List;
  * @Date: Created in 21:46 2019/5/17
  * @Modified By:
  */
-public interface WorkflowService {
+public interface WorkflowService<T> {
         void deployProcessDefiByBpmn(File file, String fileName,String category) throws FileNotFoundException;
 
         List<Deployment> findDeploymentList();
@@ -27,8 +28,20 @@ public interface WorkflowService {
 
         void deleteProcessDefinitionByDeploymentId(String deploymentId);
 
-        void startProcess(WorkflowBean workflowBean);
+        boolean startProcess(WorkflowBean workflowBean,T t);
 
         List<Task> findTaskListByName(String name);
+
+        String findTaskFormKeyByTaskId(String taskId);
+
+        T findBillByTaskId(String taskId);
+
+//        List<String> findOutComeListByTaskId(String taskId);
+
+        List<Comment> findCommentByTaskId(String taskId);
+
+        List<Comment> findCommentByObject(T t,Long id);
+
+        ProcessDefinition findProcessDefinitionByTaskId(String taskId);
 
 }
