@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/5/24 14:40:37                           */
+/* Created on:     2019/5/25 12:03:15                           */
 /*==============================================================*/
 
 
@@ -14,10 +14,11 @@ drop table if exists modified_user_association;
 create table duty_record
 (
    id                   int not null auto_increment,
-   uid                  int,
+   uid                  int not null,
    gmt_create           datetime not null,
    gmt_modified         datetime not null,
-   content              varchar(2000),
+   content              varchar(2000) default '正常',
+   is_delete            boolean not null default 0,
    primary key (id)
 );
 

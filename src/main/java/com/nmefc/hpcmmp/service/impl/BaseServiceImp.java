@@ -5,6 +5,9 @@ import com.nmefc.hpcmmp.exception.ServiceException;
 import com.nmefc.hpcmmp.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,6 +33,7 @@ public abstract class BaseServiceImp<T,E,PK extends Serializable> implements Bas
         return 0;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout = 3600,rollbackFor = Exception.class)
     @Override
     public int insertSelective(T record) throws ServiceException {
         int row = 0;
@@ -88,5 +92,5 @@ public abstract class BaseServiceImp<T,E,PK extends Serializable> implements Bas
         return 0;
     }
 
-
+    public abstract String check(T record,String response) throws ServiceException;
 }
