@@ -59,8 +59,8 @@ public class RecordController {
         record.setGmtCreate(DateTimeUtils.date2timestamp(new Date()));
 //        更新时间设置为新建时间
         record.setGmtModified(DateTimeUtils.date2timestamp(new Date()));
-
-//        密码加密,及关联角色在业务层中完成
+        if(record.getContent().length()<1){record.setContent("正常");}
+//
 //         传递给业务层
         try{
             User user = (User)SecurityUtils.getSubject().getPrincipal();
