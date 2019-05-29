@@ -175,9 +175,9 @@ public class ProcessVariable_4 {
     public void setVariable(){
         //1.第一次设置流程变量
         TaskService taskService = processEngine.getTaskService();
-        taskService.setVariable("20002","cost",5000);//在整个流程实例中都有效
-        taskService.setVariable("20002","申请时间",new Date());//在整个流程实例中都有效
-        taskService.setVariableLocal("20002","申请人","李某某");//本地设置一点该任务完成，这个变量就失效了
+        taskService.setVariable("20005","cost",5000);//在整个流程实例中都有效
+        taskService.setVariable("20005","申请时间",new Date());//在整个流程实例中都有效
+        taskService.setVariableLocal("20005","申请人","李某某");//本地设置一点该任务完成，这个变量就失效了
         System.out.println("设置成功");
         //传递自定义对象
 //        PayBillBean payBillBean = new PayBillBean();
@@ -195,7 +195,7 @@ public class ProcessVariable_4 {
  */
 @Test
     public void getVariable(){
-        String taskId = "20002";
+        String taskId = "20005";
         TaskService taskService = processEngine.getTaskService();
         Integer cost  = (Integer)taskService.getVariable(taskId,"cost");
         Date date = (Date)taskService.getVariable(taskId,"申请时间");

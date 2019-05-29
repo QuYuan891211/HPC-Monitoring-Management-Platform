@@ -78,7 +78,7 @@ public class SequenceFlow_5 {
      */
     @Test
     public void completeTask(){
-        String taskId = "50003";
+        String taskId = "35006";
         Map<String,Object> map = new HashMap<>();
         map.put("message","level2");
         processEngine.getTaskService().complete(taskId,map);

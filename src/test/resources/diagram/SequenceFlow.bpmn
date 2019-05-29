@@ -11,7 +11,7 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${message=='level2'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_9" name="level1" sourceRef="_3" targetRef="_4">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${message=='level1'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${message=='level2'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_10" sourceRef="_4" targetRef="_6"/>
     <sequenceFlow id="_11" sourceRef="_5" targetRef="_6"/>

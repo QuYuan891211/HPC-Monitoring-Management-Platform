@@ -21,7 +21,7 @@ public class ProcessInstanceAndTask_3 {
     private ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 @Test
     public void startProcess(){
-        String processDefikey = "leaveBill";
+        String processDefikey = "hotelBill";
         ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey(processDefikey);
         System.out.println("流程对象ID " + processInstance.getId());
         System.out.println("流程定义的ID  " + processInstance.getProcessDefinitionId());//默认执行最新版本
@@ -65,7 +65,7 @@ public class ProcessInstanceAndTask_3 {
     }
 @Test
     public void getProcessInstanceState() {
-        String processInstanceId = "2501";
+        String processInstanceId = "20001";
         ProcessInstance singleResult = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
 
         if (singleResult != null) {
