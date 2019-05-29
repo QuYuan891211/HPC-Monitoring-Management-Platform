@@ -28,7 +28,7 @@ public class ProcessVariable_4 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void deployProcessDefiByBpmn(){
         processEngine.getRepositoryService().createDeployment()
                 .addClasspathResource("diagram/APPayBill.bpmn")
@@ -37,7 +37,7 @@ public class ProcessVariable_4 {
                 .deploy();
     }
 
-    @Test
+
     public void startProcess(){
         String processDefikey = "payBill";
         ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey(processDefikey);
@@ -53,7 +53,7 @@ public class ProcessVariable_4 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void queryTask(){
         //String assignee = "王五";
         TaskService taskService = processEngine.getTaskService();
@@ -74,7 +74,7 @@ public class ProcessVariable_4 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void completeTask(){
         String taskId = "20002";
         processEngine.getTaskService().complete(taskId);
@@ -87,7 +87,7 @@ public class ProcessVariable_4 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void getProcessInstanceState() {
         String processInstanceId = "2501";
         ProcessInstance singleResult = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
@@ -98,7 +98,7 @@ public class ProcessVariable_4 {
             System.out.println("当前实例已经结束");
         }
     }
-    @Test
+
     public void queryHistoryProcessInst(){
         List<HistoricProcessInstance> list = processEngine.getHistoryService().createHistoricProcessInstanceQuery().list();
         if(list !=null&&list.size()>0){
@@ -118,7 +118,7 @@ public class ProcessVariable_4 {
  * @param: []
  * @return: void
  */
-    @Test
+
     public void queryHistoryTask(){
         List<HistoricTaskInstance> list = processEngine.getHistoryService().createHistoricTaskInstanceQuery().processInstanceId("2501").list();
         if(list !=null&&list.size()>0){
@@ -171,7 +171,7 @@ public class ProcessVariable_4 {
      * @param: []
      * @return: void
      */
-@Test
+
     public void setVariable(){
         //1.第一次设置流程变量
         TaskService taskService = processEngine.getTaskService();
@@ -193,7 +193,7 @@ public class ProcessVariable_4 {
  * @param: []
  * @return: void
  */
-@Test
+
     public void getVariable(){
         String taskId = "20005";
         TaskService taskService = processEngine.getTaskService();

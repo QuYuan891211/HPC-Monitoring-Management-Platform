@@ -30,7 +30,7 @@ public class SequenceFlow_5 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void deployProcessDefiByBpmn(){
         processEngine.getRepositoryService().createDeployment()
                 .addClasspathResource("diagram/SequenceFlow.bpmn")
@@ -39,7 +39,7 @@ public class SequenceFlow_5 {
                 .deploy();
     }
 
-    @Test
+
     public void startProcess(){
         String processDefikey = "sequenceBill";
         ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey(processDefikey);
@@ -55,7 +55,7 @@ public class SequenceFlow_5 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void queryTask(){
         //String assignee = "王五";
         TaskService taskService = processEngine.getTaskService();
@@ -76,7 +76,7 @@ public class SequenceFlow_5 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void completeTask(){
         String taskId = "35006";
         Map<String,Object> map = new HashMap<>();
@@ -91,7 +91,7 @@ public class SequenceFlow_5 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void getProcessInstanceState() {
         String processInstanceId = "2501";
         ProcessInstance singleResult = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
@@ -102,7 +102,7 @@ public class SequenceFlow_5 {
             System.out.println("当前实例已经结束");
         }
     }
-    @Test
+
     public void queryHistoryProcessInst(){
         List<HistoricProcessInstance> list = processEngine.getHistoryService().createHistoricProcessInstanceQuery().list();
         if(list !=null&&list.size()>0){
@@ -122,7 +122,7 @@ public class SequenceFlow_5 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void queryHistoryTask(){
         List<HistoricTaskInstance> list = processEngine.getHistoryService().createHistoricTaskInstanceQuery().processInstanceId("2501").list();
         if(list !=null&&list.size()>0){
@@ -175,7 +175,7 @@ public class SequenceFlow_5 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void setVariable(){
         //1.第一次设置流程变量
         TaskService taskService = processEngine.getTaskService();
@@ -197,7 +197,7 @@ public class SequenceFlow_5 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void getVariable(){
         String taskId = "20002";
         TaskService taskService = processEngine.getTaskService();

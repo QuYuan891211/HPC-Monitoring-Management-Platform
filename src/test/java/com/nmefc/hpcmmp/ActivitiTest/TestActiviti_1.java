@@ -57,7 +57,7 @@ public class TestActiviti_1 {
      * @param:
      * @return:
      */
-    @Test
+
     public void deploy(){
         RepositoryService repositoryService = processEngine.getRepositoryService();
         repositoryService.createDeployment().addClasspathResource("diagram/hotelBill2.bpmn")
@@ -72,7 +72,7 @@ public class TestActiviti_1 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void startProcess(){
         String key = "hotelBill";
         RuntimeService runtimeService = processEngine.getRuntimeService();
@@ -88,7 +88,7 @@ public class TestActiviti_1 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void queryTask(){
         String assignee = "lisi";
         TaskService taskService = processEngine.getTaskService();
@@ -109,7 +109,7 @@ public class TestActiviti_1 {
      * @param: []
      * @return: void
      */
-    @Test
+
     public void completeTask(){
         String taskId = "5002";
         processEngine.getTaskService().complete(taskId);

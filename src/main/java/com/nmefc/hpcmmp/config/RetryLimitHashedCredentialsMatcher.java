@@ -89,7 +89,7 @@ public class RetryLimitHashedCredentialsMatcher extends SimpleCredentialsMatcher
             e.printStackTrace();
         }
         if (userList.size() == 1) {
-            //修改数据库的状态字段为锁定
+            //修改数据库的状态字段为解锁
             userList.get(0).setIsLocked(false);
             try {
                 userService.updateByPrimaryKeySelective(userList.get(0));
