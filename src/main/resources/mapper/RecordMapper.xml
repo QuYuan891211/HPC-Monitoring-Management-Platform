@@ -9,6 +9,22 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="is_delete" jdbcType="BIT" property="isDelete" />
   </resultMap>
+  <resultMap id="UserMap" type="com.nmefc.hpcmmp.entity.management.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="is_locked" jdbcType="BIT" property="isLocked" />
+  </resultMap>
+  <resultMap id="ModUserMap" type="com.nmefc.hpcmmp.common.transPara.ModUserAssociation">
+    <result column="record_id" jdbcType="INTEGER" property="recordID" />
+    <result column="user_id" jdbcType="INTEGER" property="userID" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -90,6 +106,30 @@
     from duty_record
     where id = #{id,jdbcType=INTEGER}
   </select>
+<!--  根据record_id从modified_user_association表选择所有关联的user_id-->
+  <select id="selectModifiedUser" parameterType="java.lang.Integer" resultMap="UserMap">
+    select
+    u.id, u.account,u.remark,u.name
+    from modified_user_association mu
+    LEFT JOIN management_user u ON  u.id = mu.user_id
+    where mu.record_id = #{id,jdbcType=INTEGER}
+
+  </select>
+  <!--根据record的id和user的id，查看是否存在关联-->
+  <select id="checkAssociationExist" parameterType="com.nmefc.hpcmmp.common.transPara.ModUserAssociation" resultMap="ModUserMap">
+    select
+    *
+    from modified_user_association
+    where record_id = #{recordID,jdbcType=INTEGER} and user_id=#{userID,jdbcType=INTEGER}
+
+  </select>
+<!--在插入日志后，选择id号最大的id，即选择当前日志id-->
+  <select id="checkCurrentID" parameterType="com.nmefc.hpcmmp.common.transPara.ModUserAssociation" resultType="java.lang.Integer">
+    select
+    Max(id) as currentID
+    from duty_record
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from duty_record
     where id = #{id,jdbcType=INTEGER}
@@ -150,6 +190,11 @@
         #{isDelete,jdbcType=BIT},
       </if>
     </trim>
+  </insert>
+<!--  插入record和user的关系-->
+  <insert id="insertAssociation" parameterType="com.nmefc.hpcmmp.common.transPara.ModUserAssociation">
+    insert into modified_user_association (record_id, user_id)
+    values (#{recordID,jdbcType=INTEGER}, #{userID,jdbcType=INTEGER})
   </insert>
   <select id="countByExample" parameterType="com.nmefc.hpcmmp.entity.dutymanagement.RecordExample" resultType="java.lang.Long">
     select count(*) from duty_record
