@@ -14,7 +14,9 @@ public enum ResponseMsg {
     PAREMETERE_ERROR("参数输入违规"),
     PAREMETERE_DUPLICATION("参数重复"),
     LOGIN_ERROR("用户未注册"),
-    PASSWORD_ERROR("密码错误");
+    PASSWORD_ERROR("密码错误"),
+    RECORD_ID_MISSING("日志ID不存在"),
+    USER_LOGIN_ERROR("用户登录状态异常");
 
     private String value;
     public String getValue(){

@@ -108,7 +108,7 @@ public class User {
         this.name = name == null ? null : name.trim();
     }
 
-    public boolean getIsLocked() {
+    public Boolean getIsLocked() {
         return isLocked;
     }
 

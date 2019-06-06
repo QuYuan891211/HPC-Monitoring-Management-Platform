@@ -30,7 +30,7 @@ public class ProcessDefinitionManager_2 {
 
     public void deployProcessDefiByBpmn(){
         processEngine.getRepositoryService().createDeployment()
-                .addClasspathResource("diagram/hotelBill.bpmn")
+                .addClasspathResource("diagram/hotelBill2.bpmn")
                 .name("请求单流程")
                 .category("办公类别")
                 .deploy();
@@ -60,7 +60,7 @@ public class ProcessDefinitionManager_2 {
      */
 
     public void queryProcessDefi(){
-        String processDefiKey = "leaveBill";
+        String processDefiKey = "hotelBill";
         RepositoryService repositoryService = processEngine.getRepositoryService();
         List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery()
                 .processDefinitionKey(processDefiKey)
