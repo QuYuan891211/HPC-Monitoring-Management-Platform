@@ -121,4 +121,15 @@ public class incidentController {
         }
         return ResponseMsg.PARAMETERS_MISSING.getValue();
     }
+
+    @ResponseBody
+    @PostMapping(value = "/deleteProcessDefinition")
+    public String deleteProcessDefinition(String deploymentId){
+
+        if(deploymentId != null || deploymentId.length()>0 ){
+            workflowService.deleteProcessDefinitionByDeploymentId(deploymentId);
+            return ResponseMsg.SUCCESS.getValue();
+        }
+        return ResponseMsg.PARAMETERS_MISSING.getValue();
+    }
 }
