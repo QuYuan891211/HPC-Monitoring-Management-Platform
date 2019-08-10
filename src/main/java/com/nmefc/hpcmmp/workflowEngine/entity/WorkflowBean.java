@@ -6,9 +6,9 @@ public class WorkflowBean {
 
     private File file;		//流程定义部署文件
     private String filename;//流程定义名称
-
+    private String category;//流程定义的类别
     private Long id;//申请单ID
-
+    private String path; //流程定义的资源文件的位置
     private String deploymentId;//部署对象ID
     private String imageName;	//资源文件名称
     private String taskId;		//任务ID
@@ -65,4 +65,19 @@ public class WorkflowBean {
     }
 
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

@@ -1,20 +1,18 @@
 package com.nmefc.hpcmmp.workflowEngine.Imp;
 
-import com.alibaba.druid.util.StringUtils;
 import com.nmefc.hpcmmp.common.utils.UserSessionContexts;
 import com.nmefc.hpcmmp.workflowEngine.WorkflowService;
 import com.nmefc.hpcmmp.workflowEngine.entity.WorkflowBean;
 import org.activiti.engine.*;
 import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.history.HistoricVariableInstance;
-import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
-import org.apache.shiro.session.mgt.SessionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +30,7 @@ import java.util.zip.ZipInputStream;
  * @Date: Created in 22:00 2019/5/17
  * @Modified By:
  */
+@Service("workflowService")
 public class WorkFlowServiceImp<T> implements WorkflowService{
 
     @Autowired
@@ -59,14 +58,38 @@ public class WorkFlowServiceImp<T> implements WorkflowService{
 //                    1. 添加部署的流程定义名称
                     .name(fileName)
 //                    2. 添加流程定义的类别
-                    .category(category)
+
 //                    3.部署
+//            影响的表：
+//            act_re_procdef ：流程定义表 ：
+//            该表的key属性 是bpmn 的 id决定
+//            该表的name属性  是bpmn 的name 属性决定
+//            act_re_deployment：部署表 ：id是由act_ge_property的 next_dbid决定
+//            act_ge_property ：通用属性表
+                    .category(category)
                     .deploy();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-/**
+
+    /**
+     * @description: 根据路径获取BPMN并部署
+     * @author: QuYuan
+     * @date: 18:24 2019/8/8
+     * @param: [path, fileName, category]
+     * @return: boolean
+     */
+    @Override
+    public void deployProcessByClasspath(String path, String fileName, String category) {
+            repositoryService.createDeployment()
+                    .name(fileName)
+                    .addClasspathResource("processes/ExclusiveGateway.bpmn")
+                    .category(category)
+                    .deploy();
+    }
+
+    /**
  * @description: 查看部署信息
  * @author: QuYuan
  * @date: 12:16 2019/5/23

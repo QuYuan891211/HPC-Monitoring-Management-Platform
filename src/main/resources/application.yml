@@ -3,6 +3,11 @@ server:
 
 
 spring:
+    activiti:
+        database-schema-update: true
+        # 自动部署验证设置:true-开启（默认）、false-关闭
+        check-process-definitions: false
+        process-definition-location-prefix: classpath:/processes/
     datasource:
         name: mysql_test
         type: com.alibaba.druid.pool.DruidDataSource

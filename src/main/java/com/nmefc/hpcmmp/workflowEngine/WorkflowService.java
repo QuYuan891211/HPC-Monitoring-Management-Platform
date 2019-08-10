@@ -20,6 +20,8 @@ import java.util.List;
 public interface WorkflowService<T> {
         void deployProcessDefiByBpmn(File file, String fileName,String category) throws FileNotFoundException;
 
+        void deployProcessByClasspath(String path,String fileName,String category)throws Exception;
+
         List<Deployment> findDeploymentList();
 
         List<ProcessDefinition> findProcessDefinitionList();

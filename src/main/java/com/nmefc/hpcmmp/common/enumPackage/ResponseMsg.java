@@ -16,8 +16,9 @@ public enum ResponseMsg {
     LOGIN_ERROR("用户未注册"),
     PASSWORD_ERROR("密码错误"),
     RECORD_ID_MISSING("日志ID不存在"),
-    USER_LOGIN_ERROR("用户登录状态异常");
-
+    USER_LOGIN_ERROR("用户登录状态异常"),
+    FILE_NOT_FOUND("文件未找到"),
+    FILE_FORMAT_ERROR("文件格式错误");
     private String value;
     public String getValue(){
         return value;
