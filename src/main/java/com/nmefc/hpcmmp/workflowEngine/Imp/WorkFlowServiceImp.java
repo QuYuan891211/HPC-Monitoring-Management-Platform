@@ -294,7 +294,21 @@ public class WorkFlowServiceImp<T> implements WorkflowService{
                 .singleResult();
         return processDefinition;
     }
-
+/**
+ * @description: 根据Key查询流程定义（流程定义的最后版本）
+ * @author: QuYuan
+ * @date: 11:05 2019/8/10
+ * @param: [key]
+ * @return: org.activiti.engine.repository.ProcessDefinition
+ */
+    @Override
+    public ProcessDefinition findProcessDefinitionByKey(String key) {
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey(key)
+                .latestVersion()
+                .singleResult();
+        return processDefinition;
+    }
 
 
 }

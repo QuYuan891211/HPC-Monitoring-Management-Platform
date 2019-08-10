@@ -47,4 +47,5 @@ public interface WorkflowService<T> {
 
         ProcessDefinition findProcessDefinitionByTaskId(String taskId);
 
+        ProcessDefinition findProcessDefinitionByKey(String key);
 }

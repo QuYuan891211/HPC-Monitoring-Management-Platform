@@ -4,15 +4,15 @@ import com.nmefc.hpcmmp.common.enumPackage.ResponseMsg;
 import com.nmefc.hpcmmp.workflowEngine.WorkflowService;
 import com.nmefc.hpcmmp.workflowEngine.entity.WorkflowBean;
 import org.activiti.bpmn.exceptions.XMLException;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
 
@@ -84,6 +84,41 @@ public class incidentController {
             }
             return error_message;
         }
+    }
+    /**
+     * @description: 查询所有流程定义（不分页）
+     * @author: QuYuan
+     * @date: 11:09 2019/8/10
+     * @param: []
+     * @return: java.lang.String
+     */
+    @ResponseBody
+    @GetMapping(value = "/getProcessDefinitionList")
+    public List<String> findProcessDefinitionList(){
+       List<ProcessDefinition> processDefinitions = workflowService.findProcessDefinitionList();
+       List<String> nameList = new ArrayList<>();
+       if (processDefinitions != null || processDefinitions.size()>0){
+           for(ProcessDefinition processDefinition:processDefinitions){
+                nameList.add(processDefinition.getKey());
+           }
+       }
+        return  nameList;
+    }
+    /**
+     * @description: 根据key查找流程定义
+     * @author: QuYuan
+     * @date: 11:34 2019/8/10
+     * @param: [key]
+     * @return: java.lang.String
+     */
+    @ResponseBody
+    @PostMapping(value = "/findProcessDefinitionByKey")
+    public String findProcessDefinitionByKey(String key){
 
+        if(key != null || key.length()>0 ){
+          ProcessDefinition  processDefinition =workflowService.findProcessDefinitionByKey(key);
+            return processDefinition.getName();
+        }
+        return ResponseMsg.PARAMETERS_MISSING.getValue();
     }
 }
