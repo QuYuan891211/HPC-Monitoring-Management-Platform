@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.zip.ZipInputStream;
 
 /**
  * @Author: QuYuan
@@ -18,7 +19,7 @@ import java.util.List;
  * @Modified By:
  */
 public interface WorkflowService<T> {
-        void deployProcessDefiByBpmn(File file, String fileName,String category) throws FileNotFoundException;
+        void deployProcessDefiByBpmn(ZipInputStream zipInputStream, String fileName, String category) throws Exception;
 
         void deployProcessByClasspath(String path,String fileName,String category)throws Exception;
 

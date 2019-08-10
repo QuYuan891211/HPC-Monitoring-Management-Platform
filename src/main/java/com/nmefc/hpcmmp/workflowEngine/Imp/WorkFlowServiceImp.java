@@ -51,14 +51,11 @@ public class WorkFlowServiceImp<T> implements WorkflowService{
      * @return: void
      */
     @Override
-    public void deployProcessDefiByBpmn(File file, String fileName,String category)  {
-        try {
-            ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(file));
+    public void deployProcessDefiByBpmn(ZipInputStream zipInputStream, String fileName,String category)  {
             repositoryService.createDeployment().addZipInputStream(zipInputStream)
 //                    1. 添加部署的流程定义名称
                     .name(fileName)
 //                    2. 添加流程定义的类别
-
 //                    3.部署
 //            影响的表：
 //            act_re_procdef ：流程定义表 ：
@@ -68,9 +65,6 @@ public class WorkFlowServiceImp<T> implements WorkflowService{
 //            act_ge_property ：通用属性表
                     .category(category)
                     .deploy();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -84,7 +78,7 @@ public class WorkFlowServiceImp<T> implements WorkflowService{
     public void deployProcessByClasspath(String path, String fileName, String category) {
             repositoryService.createDeployment()
                     .name(fileName)
-                    .addClasspathResource("processes/ExclusiveGateway.bpmn")
+                    .addClasspathResource(path)
                     .category(category)
                     .deploy();
     }
