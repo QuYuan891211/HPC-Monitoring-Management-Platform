@@ -1,4 +1,4 @@
-package com.nmefc.hpcmmp.controller.dutyManagement;
+package com.nmefc.hpcmmp.controller.common;
 
 import com.nmefc.hpcmmp.common.enumPackage.ResponseMsg;
 import com.nmefc.hpcmmp.workflowEngine.WorkflowService;
@@ -23,8 +23,8 @@ import java.util.zip.ZipInputStream;
  * @Modified By:
  */
 @Controller
-@RequestMapping("/incident")
-public class incidentController {
+@RequestMapping("/workflow")
+public class WorkflowController {
 
     @Autowired
     private WorkflowService workflowService;
@@ -37,7 +37,7 @@ public class incidentController {
      */
     @ResponseBody
     @PostMapping(value = "/newDepolyByClasspath")
-    public String newDepolyByClasspath(@RequestBody WorkflowBean workflowBean){
+    public String newDeployByClasspath(@RequestBody WorkflowBean workflowBean){
         if(workflowBean == null){ return ResponseMsg.PARAMETERS_MISSING.getValue();}
         String path = workflowBean.getPath();
         String name = workflowBean.getFilename();
@@ -66,7 +66,7 @@ public class incidentController {
      */
     @ResponseBody
     @PostMapping(value = "/newDepolyByZipInputStream")
-    public String newDepolyByZipInputStream(){
+    public String newDeployByZipInputStream(){
         try {
             InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("processes/ExclusiveGateway.zip");
             ZipInputStream zipInputStream = new ZipInputStream(inputStream);
