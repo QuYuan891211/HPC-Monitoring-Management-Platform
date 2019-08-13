@@ -1,10 +1,12 @@
 package com.nmefc.hpcmmp.controller.common;
 
 import com.nmefc.hpcmmp.common.enumPackage.ResponseMsg;
+import com.nmefc.hpcmmp.entity.management.User;
 import com.nmefc.hpcmmp.workflowEngine.WorkflowService;
 import com.nmefc.hpcmmp.workflowEngine.entity.WorkflowBean;
 import org.activiti.bpmn.exceptions.XMLException;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +19,11 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
 
 /**
- * @Author: QuYuan
- * @Description:
- * @Date: Created in 15:49 2019/7/29
- * @Modified By:
+ *@Description: 工作流控制器
+ *@Param:
+ *@Return:
+ *@Author: quyua
+ *@Date: 2019/8/13 1:31
  */
 @Controller
 @RequestMapping("/workflow")
@@ -117,11 +120,18 @@ public class WorkflowController {
 
         if(key != null || key.length()>0 ){
           ProcessDefinition  processDefinition =workflowService.findProcessDefinitionByKey(key);
-            return processDefinition.getName();
+          //之后回显要加上key
+          return processDefinition.getName();
         }
         return ResponseMsg.PARAMETERS_MISSING.getValue();
     }
-
+    /**
+     *@Description:删除流程定义
+     *@Param: [deploymentId]
+     *@Return: java.lang.String
+     *@Author: quyua
+     *@Date: 2019/8/13 0:52
+     */
     @ResponseBody
     @PostMapping(value = "/deleteProcessDefinition")
     public String deleteProcessDefinition(String deploymentId){
@@ -131,5 +141,19 @@ public class WorkflowController {
             return ResponseMsg.SUCCESS.getValue();
         }
         return ResponseMsg.PARAMETERS_MISSING.getValue();
+    }
+    @ResponseBody
+    @PostMapping(value = "/startProcess")
+    public String startProcess(@RequestBody WorkflowBean workflowBean){
+        try {
+            User user = (User) SecurityUtils.getSubject().getPrincipal();
+            if(user == null){ return ResponseMsg.USER_LOGIN_ERROR.getValue();}
+            workflowService.startProcess(workflowBean,user);
+            return ResponseMsg.SUCCESS.getValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseMsg.EXCEPTION.getValue();
+        }
+
     }
 }

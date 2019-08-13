@@ -1,5 +1,7 @@
 package com.nmefc.hpcmmp.workflowEngine;
 
+import com.nmefc.hpcmmp.entity.management.User;
+import com.nmefc.hpcmmp.workflowEngine.entity.Bill;
 import com.nmefc.hpcmmp.workflowEngine.entity.WorkflowBean;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -18,7 +20,7 @@ import java.util.zip.ZipInputStream;
  * @Date: Created in 21:46 2019/5/17
  * @Modified By:
  */
-public interface WorkflowService<T> {
+public interface WorkflowService<T extends Bill> {
         void deployProcessDefiByBpmn(ZipInputStream zipInputStream, String fileName, String category) throws Exception;
 
         void deployProcessByClasspath(String path,String fileName,String category)throws Exception;
@@ -31,7 +33,7 @@ public interface WorkflowService<T> {
 
         void deleteProcessDefinitionByDeploymentId(String deploymentId);
 
-        boolean startProcess(WorkflowBean workflowBean,T t);
+        boolean startProcess(WorkflowBean workflowBean,User user);
 
         List<Task> findTaskListByName(String name);
 
@@ -43,7 +45,7 @@ public interface WorkflowService<T> {
 
         List<Comment> findCommentByTaskId(String taskId);
 
-        List<Comment> findCommentByObject(T t,Long id);
+//        List<Comment> findCommentByObject(Long id);
 
         ProcessDefinition findProcessDefinitionByTaskId(String taskId);
 

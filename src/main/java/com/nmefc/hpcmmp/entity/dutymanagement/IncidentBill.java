@@ -1,8 +1,10 @@
 package com.nmefc.hpcmmp.entity.dutymanagement;
 
+import com.nmefc.hpcmmp.workflowEngine.entity.Bill;
+
 import java.util.Date;
 
-public class IncidentBill {
+public class IncidentBill extends Bill{
     private Integer id;
 
     private Date gmtCreate;

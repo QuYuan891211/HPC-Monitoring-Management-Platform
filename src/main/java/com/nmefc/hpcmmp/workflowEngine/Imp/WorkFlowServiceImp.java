@@ -1,7 +1,9 @@
 package com.nmefc.hpcmmp.workflowEngine.Imp;
 
 import com.nmefc.hpcmmp.common.utils.UserSessionContexts;
+import com.nmefc.hpcmmp.entity.management.User;
 import com.nmefc.hpcmmp.workflowEngine.WorkflowService;
+import com.nmefc.hpcmmp.workflowEngine.entity.Bill;
 import com.nmefc.hpcmmp.workflowEngine.entity.WorkflowBean;
 import org.activiti.engine.*;
 import org.activiti.engine.form.TaskFormData;
@@ -31,7 +33,7 @@ import java.util.zip.ZipInputStream;
  * @Modified By:
  */
 @Service("workflowService")
-public class WorkFlowServiceImp<T> implements WorkflowService{
+public class WorkFlowServiceImp<T extends Bill> implements WorkflowService{
 
     @Autowired
     private RepositoryService repositoryService;
@@ -129,20 +131,18 @@ public class WorkFlowServiceImp<T> implements WorkflowService{
     }
 
     @Override
-    public boolean startProcess(WorkflowBean workflowBean, Object object) {
+    public boolean startProcess(WorkflowBean workflowBean, User user) {
         Long id = workflowBean.getId();
-//        使用当前对象获取到流程定义的key（对象的名称就是流程定义的key）
-        String key = object.getClass().getSimpleName();
-//        从Session中获取当前任务的办理人，使用流程变量设置下一个任务的办理人
+//        从Session中获取当前任务的办理人，使用流程变量设置下一个任务的办理
 //         inputUser是流程变量的名称，
 //         获取的办理人是流程变量的值
          Map<String,Object> varibleMap = new HashMap<>();
 
-         if (UserSessionContexts.getUser()!=null){
-             varibleMap.put("inputUser", UserSessionContexts.getUser().getName());
-             String objId = key+"."+id;
+         if (user !=null){
+             varibleMap.put("inputUser", user.getName());
+             String objId = workflowBean.getKey()+"."+id;
              varibleMap.put("objId", objId);
-             runtimeService.startProcessInstanceByKey(key,objId,varibleMap);
+             runtimeService.startProcessInstanceByKey(workflowBean.getKey(),objId,varibleMap);
              return true;
          }
         return false;
@@ -151,7 +151,7 @@ public class WorkFlowServiceImp<T> implements WorkflowService{
 
 ////1：获取请假单ID，使用请假单ID，查询请假单的对象LeaveBill
 //        Long id = workflowBean.getId();
-//        LeaveBill leaveBill = leaveBillDao.findLeaveBillById(id);
+//        LeaveBill leaveBill= leaveBillDao.findLeaveBillById(id);
 //        //2：更新请假单的请假状态从0变成1（初始录入-->审核中）
 //        leaveBill.setState(1);
 //        //3：使用当前对象获取到流程定义的key（对象的名称就是流程定义的key）
@@ -209,7 +209,7 @@ public class WorkFlowServiceImp<T> implements WorkflowService{
      * @return: java.lang.Object
      */
     @Override
-    public Object findBillByTaskId(String taskId) {
+    public T findBillByTaskId(String taskId) {
         //1：使用任务ID，查询任务对象Task
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         //2：使用任务对象Task获取流程实例ID

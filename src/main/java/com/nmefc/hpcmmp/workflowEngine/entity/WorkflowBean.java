@@ -15,6 +15,10 @@ public class WorkflowBean {
     private String outcome;		//连线名称
     private String comment;		//备注
 
+
+
+    private String key;//流程实例的key
+
     public File getFile() {
         return file;
     }
@@ -60,7 +64,7 @@ public class WorkflowBean {
     public String getComment() {
         return comment;
     }
-    public void setComment(String comment) {
+    public void  setComment(String comment) {
         this.comment = comment;
     }
 
@@ -79,5 +83,12 @@ public class WorkflowBean {
 
     public void setPath(String path) {
         this.path = path;
+    }
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

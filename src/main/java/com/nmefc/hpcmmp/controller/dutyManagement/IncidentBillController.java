@@ -40,7 +40,7 @@ public class IncidentBillController {
         incidentBill.setGmtCreate(DateTimeUtils.date2timestamp(new Date()));
         incidentBill.setGmtModified(DateTimeUtils.date2timestamp(new Date()));
         //3.找到事件单发起者（当前用户）的ID
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        User user = (User) SecurityUtils.getSubject(). getPrincipal();
         if(user == null){return ResponseMsg.USER_LOGIN_ERROR.getValue();}
         incidentBill.setInitiator(user.getId());
         //4.交给Service层完成存入(事件关联功能暂时不做)
