@@ -18,7 +18,11 @@ public enum ResponseMsg {
     RECORD_ID_MISSING("日志ID不存在"),
     USER_LOGIN_ERROR("用户登录状态异常"),
     FILE_NOT_FOUND("文件未找到"),
-    FILE_FORMAT_ERROR("文件格式错误");
+    FILE_FORMAT_ERROR("文件格式错误"),
+    ASSICIATED_DATA_UNEXIST("关联数据不存在"),
+    START_PROCESS_ERROR("启动工作流实体异常"),
+    COMPLETE_TASK_ERROR("完成工作流任务异常"),
+    PERMISSION_DENIED("权限被拒绝");
     private String value;
     public String getValue(){
         return value;

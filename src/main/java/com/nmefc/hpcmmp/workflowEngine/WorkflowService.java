@@ -5,6 +5,7 @@ import com.nmefc.hpcmmp.workflowEngine.entity.Bill;
 import com.nmefc.hpcmmp.workflowEngine.entity.WorkflowBean;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -33,7 +35,7 @@ public interface WorkflowService<T extends Bill> {
 
         void deleteProcessDefinitionByDeploymentId(String deploymentId);
 
-        boolean startProcess(WorkflowBean workflowBean,User user);
+        ProcessInstance startProcess(WorkflowBean workflowBean, User user);
 
         List<Task> findTaskListByName(String name);
 
@@ -50,4 +52,10 @@ public interface WorkflowService<T extends Bill> {
         ProcessDefinition findProcessDefinitionByTaskId(String taskId);
 
         ProcessDefinition findProcessDefinitionByKey(String key);
+
+        int instIsFinished(int id);
+        int findTaskIDByProcInstID(int id);
+        void completeTask(int id,Map<String,Object> map);
+        void setAssigneeTask(int taskId,int assiId);
+        Task findTaskByID(int taskId);
 }

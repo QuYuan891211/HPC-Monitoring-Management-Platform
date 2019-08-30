@@ -131,7 +131,7 @@ public class WorkFlowServiceImp<T extends Bill> implements WorkflowService{
     }
 
     @Override
-    public boolean startProcess(WorkflowBean workflowBean, User user) {
+    public ProcessInstance startProcess(WorkflowBean workflowBean, User user) {
         Long id = workflowBean.getId();
 //        从Session中获取当前任务的办理人，使用流程变量设置下一个任务的办理
 //         inputUser是流程变量的名称，
@@ -142,13 +142,103 @@ public class WorkFlowServiceImp<T extends Bill> implements WorkflowService{
              varibleMap.put("inputUser", user.getName());
              String objId = workflowBean.getKey()+"."+id;
              varibleMap.put("objId", objId);
-             runtimeService.startProcessInstanceByKey(workflowBean.getKey(),objId,varibleMap);
-             return true;
+
+             return runtimeService.startProcessInstanceByKey(workflowBean.getKey(),objId,varibleMap);
          }
-        return false;
+
+        return null;
+    }
+
+    /**
+     *@description:根据实体PROC_INST_ID，判断该流程实体是否已经办结
+     *@date:2019/8/26
+     *@author:Li Fei
+     * @param:proc_inst_id
+     * @return:0：未完成；1:完成；2：找不到该id；3：既有完成的也有未完成的（应该不存在）
+     */
+    public int instIsFinished(int id){
+        //查看act_hi_procinst中已完成的，proc_inst_id==id的，是否存在
+        boolean finished=!historyService.createHistoricProcessInstanceQuery().finished().processInstanceId(String.valueOf(id)).list().isEmpty();
+        boolean unfinished=!historyService.createHistoricProcessInstanceQuery().unfinished().processInstanceId(String.valueOf(id)).list().isEmpty();
+        if(finished==true&unfinished==false){
+            //完成情况
+            return 1;
+        }
+        if(finished==false&unfinished==true){
+            //完成情况
+            return 0;
+        }
+        if(finished==false&unfinished==false){
+            //完成情况
+            return 2;
+        }
+        return 3;
+    }
+
+    /**
+     *@description:通过proc_inst_id寻找到Task ID（该方法仅适合没有同时办理情况的bpmn）
+     *@date:2019/8/29
+     *@author:Li Fei
+     * @param:
+     * @return:返回任务的ID，-1表示不存在该实体id对应的任务id，-2表示出现了多个对应的任务id
+     */
+    public int findTaskIDByProcInstID(int id){
+        //查看act_ro_task表，proc_inst_id==id的项的ID号
+        List<Task> taskList= taskService.createTaskQuery().processInstanceId(String.valueOf(id)).list();
+        if(taskList.isEmpty()){
+            return -1;
+        }
+        if(taskList.size()>1){
+            return -2;
+        }
+        return Integer.parseInt(taskList.get(0).getId());
+        //return historyService.createHistoricProcessInstanceQuery().finished().processInstanceId(String.valueOf(id)).list().isEmpty();
     }
 
 
+
+    /**
+     *@description:完成一步工作流
+     *@date:2019/8/29
+     *@author:Li Fei
+     * @param:
+     * @return:
+     */
+    @Override
+    public void completeTask(int id, Map map) {
+        taskService.complete(String.valueOf(id),map);
+    }
+//
+//    public void completeTask(int id,Map<String,Object> map){
+//        //taskService.complete();要加map吗？
+//         taskService.complete(String.valueOf(id),map);
+//    }
+
+    /**
+     *@description:设置该任务的执行人
+     *@date:2019/8/30
+     *@author:Li Fei
+     * @param:
+     * @return:
+     */
+    public void setAssigneeTask(int taskId,int assiId){
+        //任务ID
+
+        //指定的办理人
+
+        taskService.setAssignee(String.valueOf(taskId), String.valueOf(assiId));
+    }
+
+    /**
+     *@description:根据TaskID寻找task
+     *@date:2019/8/30
+     *@author:Li Fei
+     * @param:
+     * @return:
+     */
+    public  Task findTaskByID(int taskId){
+        return taskService.createTaskQuery().taskId(String.valueOf(taskId)).list().get(0);
+    }
 ////1：获取请假单ID，使用请假单ID，查询请假单的对象LeaveBill
 //        Long id = workflowBean.getId();
 //        LeaveBill leaveBill= leaveBillDao.findLeaveBillById(id);
