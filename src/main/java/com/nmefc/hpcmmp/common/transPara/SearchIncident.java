@@ -1,15 +1,19 @@
-package com.nmefc.hpcmmp.entity.dutymanagement;
-
-import com.nmefc.hpcmmp.workflowEngine.entity.Bill;
+package com.nmefc.hpcmmp.common.transPara;
 
 import java.util.Date;
 
-public class IncidentBill extends Bill{
+/**
+ * @author:zlyfs date:2019/8/19
+ * @description:
+ */
+public class SearchIncident {
     private Integer id;
 
-    private Date gmtCreate;
+    private Date gmtCreateStart;
+    private Date gmtCreateEnd;
 
-    private Date gmtModified;
+    private Date gmtModifiedStart;
+    private Date gmtModifiedEnd;
 
     private Boolean isDelete;
 
@@ -21,7 +25,8 @@ public class IncidentBill extends Bill{
 
     private Long assetId;
 
-    private Date startTime;
+    private Date startTimeStart;
+    private Date startTimeEnd;
 
     private String cause;
 
@@ -29,7 +34,8 @@ public class IncidentBill extends Bill{
 
     private String processes;
 
-    private Date finishTime;
+    private Date finishTimeStart;
+    private Date finishTimeEnd;
 
     private Integer billState;
 
@@ -41,20 +47,32 @@ public class IncidentBill extends Bill{
         this.id = id;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public Date getGmtCreateStart() {
+        return gmtCreateStart;
+    }
+    public Date getGmtCreateEnd() {
+        return gmtCreateEnd;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setGmtCreateStart(Date gmtCreateStart) {
+        this.gmtCreateStart = gmtCreateStart;
+    }
+    public void setGmtCreateEnd(Date gmtCreateEnd) {
+        this.gmtCreateEnd = gmtCreateEnd;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public Date getGmtModifiedStart() {
+        return gmtModifiedStart;
+    }
+    public Date getGmtModifiedEnd() {
+        return gmtModifiedEnd;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setGmtModifiedStart(Date gmtModifiedStart) {
+        this.gmtModifiedStart = gmtModifiedStart;
+    }
+    public void setGmtModifiedEnd(Date gmtModifiedEnd) {
+        this.gmtModifiedEnd = gmtModifiedEnd;
     }
 
     public Boolean getIsDelete() {
@@ -97,14 +115,19 @@ public class IncidentBill extends Bill{
         this.assetId = assetId;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getStartTimeStart() {
+        return startTimeStart;
+    }
+    public Date getStartTimeEnd() {
+        return startTimeEnd;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setStartTimeStart(Date startTimeStart) {
+        this.startTimeStart = startTimeStart;
     }
-
+    public void setStartTimeEnd(Date startTimeEnd) {
+        this.startTimeEnd = startTimeEnd;
+    }
     public String getCause() {
         return cause;
     }
@@ -129,14 +152,18 @@ public class IncidentBill extends Bill{
         this.processes = processes == null ? null : processes.trim();
     }
 
-    public Date getFinishTime() {
-        return finishTime;
+    public Date getFinishTimeStart() {
+        return finishTimeStart;
     }
-
-    public void setFinishTime(Date finishTime) {
-        this.finishTime = finishTime;
+    public Date getFinishTimeEnd() {
+        return finishTimeEnd;
     }
-
+    public void setFinishTimeStart(Date finishTimeStart) {
+        this.finishTimeStart = finishTimeStart;
+    }
+    public void setFinishTimeEnd(Date finishTimeEnd) {
+        this.finishTimeEnd = finishTimeEnd;
+    }
     public Integer getBillState() {
         return billState;
     }

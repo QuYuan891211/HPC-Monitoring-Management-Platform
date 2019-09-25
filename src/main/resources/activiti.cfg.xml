@@ -9,7 +9,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
    <!-- 配置数据库连接 -->
  <property name="jdbcDriver" value="com.mysql.jdbc.Driver"></property>
  <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hpcmmp?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8"></property>
- <property name="jdbcUsername" value="root"></property>
+ <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/activitiDB?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8"></property>-->
+     <property name="jdbcUsername" value="root"></property>
  <property name="jdbcPassword" value="admin123"></property>
  
   <!-- 配置创建表策略 :没有表时，自动创建 -->

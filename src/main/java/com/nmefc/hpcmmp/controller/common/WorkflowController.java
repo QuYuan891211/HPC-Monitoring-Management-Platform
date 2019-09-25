@@ -71,9 +71,9 @@ public class WorkflowController {
     @PostMapping(value = "/newDepolyByZipInputStream")
     public String newDeployByZipInputStream(){
         try {
-            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("processes/ExclusiveGateway.zip");
+            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("processes/ProcessModel.zip");
             ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-            workflowService.deployProcessDefiByBpmn(zipInputStream,"test1","test");
+            workflowService.deployProcessDefiByBpmn(zipInputStream,"test11","test");
             return ResponseMsg.SUCCESS.getValue();
         } catch (Exception e) {
             e.printStackTrace();
@@ -156,4 +156,7 @@ public class WorkflowController {
         }
 
     }
+
+
+
 }
